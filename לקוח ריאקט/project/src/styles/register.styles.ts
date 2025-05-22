@@ -1,0 +1,161 @@
+const styles = {
+    container: {
+      position: "relative",
+      minHeight: "100vh",
+      py: 8,
+      overflow: "hidden",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    background: {
+      position: "fixed",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundImage: `url('/placeholder.svg?height=1080&width=1920')`,
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      backgroundAttachment: "fixed",
+      zIndex: -2,
+      filter: "brightness(0.9)",
+    },
+    overlay: {
+      position: "fixed",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      background: `linear-gradient(135deg, rgba(245, 169, 184, 0.7) 0%, rgba(169, 222, 245, 0.7) 100%)`,
+      zIndex: -1,
+    },
+    decorElement1: {
+      position: "absolute",
+      top: "5%",
+      left: "5%",
+      width: "150px",
+      height: "150px",
+      backgroundImage: `url('/placeholder.svg?height=150&width=150')`,
+      backgroundSize: "contain",
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
+      opacity: 0.6,
+      zIndex: 0,
+    },
+    decorElement2: {
+      position: "absolute",
+      bottom: "5%",
+      right: "5%",
+      width: "180px",
+      height: "180px",
+      backgroundImage: `url('/placeholder.svg?height=180&width=180')`,
+      backgroundSize: "contain",
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
+      opacity: 0.6,
+      zIndex: 0,
+      transform: "rotate(180deg)",
+    },
+    contentContainer: {
+      position: "relative",
+      zIndex: 1,
+    },
+    paper: {
+      p: 4,
+      borderRadius: 4,
+      background: "rgba(255, 255, 255, 0.85)",
+      backdropFilter: "blur(10px)",
+      border: "1px solid rgba(255, 255, 255, 0.2)",
+      boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)",
+    },
+    backButton: {
+      mb: 2,
+      borderRadius: 2,
+      color: "black",
+    },
+    headerBox: {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      mb: 4,
+    },
+    avatar: {
+      width: 80,
+      height: 80,
+      bgcolor: "#ff758c",
+      mb: 2,
+      boxShadow: "0 4px 12px rgba(255, 117, 140, 0.3)",
+    },
+    avatarIcon: {
+      fontSize: 40,
+    },
+    title: {
+      fontWeight: "bold",
+      color: "#333",
+    },
+    subtitle: {
+      color: "#555",
+    },
+    inputContainer: {
+      mb: 2,
+      position: "relative",
+    },
+    inputIcon: {
+      position: "absolute",
+      top: "50%",
+      transform: "translateY(-50%)",
+      left: 12,
+      color: "#555",
+      zIndex: 1,
+    },
+    textField: {
+      mb: 2,
+      "& .MuiOutlinedInput-root": {
+        borderRadius: 2,
+        pl: 5,
+        backgroundColor: "rgba(255, 255, 255, 0.5)",
+        "&:hover": {
+          backgroundColor: "rgba(255, 255, 255, 0.7)",
+        },
+        "&.Mui-focused": {
+          backgroundColor: "rgba(255, 255, 255, 0.9)",
+        },
+      },
+      "& .MuiInputLabel-root": {
+        color: "#555",
+        marginLeft: 4,
+      },
+      "& .MuiInputLabel-shrink": {
+        transform: "translate(14px, -9px) scale(0.75)",
+        background: "white",
+        padding: "0 5px",
+      },
+      "& .MuiOutlinedInput-input": {
+        color: "#333",
+      },
+    },
+    submitButton: {
+      borderRadius: 2,
+      py: 1.5,
+      background: "linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%)",
+      boxShadow: "0 4px 12px rgba(255, 117, 140, 0.3)",
+      transition: "transform 0.3s ease, box-shadow 0.3s ease",
+      "&:hover": {
+        transform: "translateY(-3px)",
+        boxShadow: "0 6px 16px rgba(255, 117, 140, 0.4)",
+      },
+    },
+    loginLink: {
+      mt: 2,
+      textAlign: "center",
+    },
+    link: {
+      color: "#ff758c",
+      fontWeight: "bold",
+      textDecoration: "none",
+    },
+  }
+  
+  export default styles
+  
