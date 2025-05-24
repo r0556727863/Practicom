@@ -8,6 +8,9 @@ namespace Pictures.Core.Services
 {
     public interface ITextGeneratorService
     {
-        Task<string> GenerateTextAsync(string topic);
+        Task<string> GenerateImageDescriptionAsync(string albumName);
+        Task<string> AnswerUserQuestionAsync(string question);
     }
+
+
 }

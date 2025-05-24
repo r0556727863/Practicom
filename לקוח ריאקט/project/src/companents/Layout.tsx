@@ -156,14 +156,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 <ListItemText primary={item.text} primaryTypographyProps={styles.drawerItemText} />
               </ListItemButton>
             ))}
-            {/* {token && (
-              <ListItemButton onClick={handleLogout} sx={styles.drawerItem}>
-                <ListItemIcon sx={styles.drawerItemIcon}>
-                  <LogoutIcon />
-                </ListItemIcon>
-                <ListItemText primary="התנתקות" primaryTypographyProps={styles.drawerItemText} />
-              </ListItemButton>
-            )} */}
+            
           </List>
         </Box>
       </Drawer>
@@ -174,7 +167,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
       <Box component="footer" sx={styles.footer}>
         <Container maxWidth={false} sx={{ width: "100%" }}>
-          <Typography variant="body2">&copy; {new Date().getFullYear()} כל הזכויות שמורות.ruth.</Typography>
+          <Typography variant="body2">&copy; {new Date().getFullYear()} כל הזכויות שמורות</Typography>
         </Container>
       </Box>
 
