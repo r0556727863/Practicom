@@ -242,11 +242,10 @@ const FolderImages: React.FC = () => {
             onDeleteImage={requestDeleteImage}
             onUpdateImage={handleUpdateImage}
             onUploadImage={handleUploadImage}
+            albumTitle={albumTitle}
+
           />
         )}
-
-
-
       </Container>
 
       <Dialog open={deleteDialogOpen} onClose={() => setDeleteDialogOpen(false)} PaperProps={{ sx: folderImagesStyles.dialogPaper }}>

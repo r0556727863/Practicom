@@ -1,4 +1,4 @@
-import type React from "react"
+import React from "react"
 import { useState } from "react"
 import {
   Dialog,
@@ -58,6 +58,7 @@ interface ImageDialogProps {
   onClose: () => void
   images: Image[]
   albumId?: number
+  albumTitle?: string // הוספת פרופס לאלבום
   onDeleteImage: (photoId: number) => void
   onUpdateImage: (image: Image, newTitle: string) => Promise<boolean>
   onUploadImage: () => void
@@ -90,6 +91,7 @@ const ImageDialog: React.FC<ImageDialogProps> = ({
   onClose,
   images,
   albumId,
+  albumTitle,
   onDeleteImage,
   onUpdateImage,
   onUploadImage,
@@ -108,6 +110,25 @@ const ImageDialog: React.FC<ImageDialogProps> = ({
   const [snackbarOpen, setSnackbarOpen] = useState(false)
   const [snackbarMessage, setSnackbarMessage] = useState("")
   const [snackbarSeverity, setSnackbarSeverity] = useState<"success" | "error" | "info" | "warning">("success")
+  // הוספת מאזין לאירועים של מקלדת
+  React.useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (selectedImage) {
+        if (event.key === "ArrowRight") {
+          handleNextImage();
+        } else if (event.key === "ArrowLeft") {
+          handlePrevImage();
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    // ניקוי המאזין כאשר הרכיב מתפרק
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [selectedImage, selectedImageIndex]); // הוסף את selectedImage ו-selectedImageIndex כתלות
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue)
@@ -275,7 +296,7 @@ const ImageDialog: React.FC<ImageDialogProps> = ({
             <CloseIcon />
           </IconButton>
           <Typography variant="h6" component="div" fontWeight="bold" sx={styles.title}>
-            תמונות באלבום
+            {`תמונות באלבום ${albumTitle}`} {/* כאן משתמשים בשם האלבום */}
           </Typography>
         </DialogTitle>
 
@@ -387,14 +408,16 @@ const ImageDialog: React.FC<ImageDialogProps> = ({
                           {/* כפתור הורדה */}
                           <Tooltip title="הורד תמונה">
                             <IconButton
-                              size="small"
+                              size="medium" // או תוכל לשים כאן "small" אם זה מה שצריך
                               sx={{
-                                color: "#1b5e20",
+                                color: "#388E3C", // או "#4CAF50" לצבע חזק יותר
                                 "&:hover": { color: "#2e7d32" },
+                                width: 50,
+                                height: 50,
                               }}
                               onClick={() => handleDownloadImage(image)}
                             >
-                              <DownloadIcon fontSize="small" />
+                              <DownloadIcon fontSize="inherit" /> {/* השתמש ב-inherit כדי להתאים את גודל האייקון לגודל הכפתור */}
                             </IconButton>
                           </Tooltip>
                           {/* כפתור AI */}
@@ -423,11 +446,7 @@ const ImageDialog: React.FC<ImageDialogProps> = ({
                     variant="contained"
                     startIcon={<SlideshowIcon />}
                     onClick={handleOpenSlideshow}
-                    sx={{
-                      ...styles.uploadButton,
-                      ml: 2,
-                      background: "linear-gradient(135deg, #ff758c 0%, #a9def5 100%)",
-                    }}
+                    sx={styles.uploadButton}
                   >
                     תצוגת שקופיות
                   </Button>
@@ -449,9 +468,15 @@ const ImageDialog: React.FC<ImageDialogProps> = ({
           onClose={handleCloseFullImage}
           maxWidth="lg"
           PaperProps={{
-            sx: styles.fullImageDialog,
+            sx: {
+              ...styles.fullImageDialog,
+              borderRadius: "10px", // פחות אליפסה, יותר קרוב למלבן
+              border: "5px solid rgba(0, 212, 255, 0.7)", // מסגרת צבעונית
+              overflow: "visible", // שנה ל-visible כדי לא לאפשר חיתוך
+            },
           }}
         >
+
           <IconButton aria-label="close" onClick={handleCloseFullImage} sx={styles.fullImageCloseButton}>
             <CloseIcon />
           </IconButton>
@@ -498,44 +523,39 @@ const ImageDialog: React.FC<ImageDialogProps> = ({
             <TransformWrapper initialScale={1} initialPositionX={0} initialPositionY={0}>
               {({ zoomIn, zoomOut, resetTransform }) => (
                 <>
-                  <TransformComponent
-                    wrapperStyle={{
-                      width: "100%",
-                      height: "80vh",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <img
-                      src={selectedImage.url || "/placeholder.svg"}
-                      alt={selectedImage.title}
-                      style={{
-                        maxWidth: "100%",
-                        maxHeight: "80vh",
-                        objectFit: "contain",
-                      }}
-                    />
-                  </TransformComponent>
+                 <TransformComponent
+  wrapperStyle={{
+    width: "100%",
+    height: "80vh", // אפשר לשנות את הגובה בהתאם לצורך
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  }}
+>
+  <img
+    src={selectedImage.url || "/placeholder.svg"}
+    alt={selectedImage.title}
+    style={styles.fullImage}
+  />
+</TransformComponent>
 
                   {/* כפתורי זום בתחתית התמונה */}
                   <Paper elevation={3} sx={styles.zoomControls}>
-                    <IconButton onClick={() => zoomIn()} size="small" sx={styles.zoomButton}>
+                    <IconButton onClick={() => zoomIn()} size="small" sx={{ ...styles.zoomButton, background: "rgba(0, 212, 255, 0.8)" }}>
                       <ZoomInIcon fontSize="small" />
                     </IconButton>
-                    <IconButton onClick={() => zoomOut()} size="small" sx={styles.zoomButton}>
+                    <IconButton onClick={() => zoomOut()} size="small" sx={{ ...styles.zoomButton, background: "rgba(0, 212, 255, 0.8)" }}>
                       <ZoomOutIcon fontSize="small" />
                     </IconButton>
-                    <IconButton onClick={() => resetTransform()} size="small" sx={styles.zoomButton}>
+                    <IconButton onClick={() => resetTransform()} size="small" sx={{ ...styles.zoomButton, background: "rgba(0, 212, 255, 0.8)" }}>
                       <RestartAltIcon fontSize="small" />
                     </IconButton>
-                    {/* כפתור הורדה בתצוגה מלאה */}
                     <IconButton
                       onClick={() => handleDownloadImage(selectedImage)}
                       size="small"
                       sx={{
                         ...styles.zoomButton,
-                        color: "#4caf50",
+                        background: "rgba(0, 212, 255, 0.8)", // צבע רקע שונה
                       }}
                     >
                       <DownloadIcon fontSize="small" />
@@ -546,7 +566,7 @@ const ImageDialog: React.FC<ImageDialogProps> = ({
                       size="small"
                       sx={{
                         ...styles.zoomButton,
-                        color: "#ff758c",
+                        background: "rgba(0, 212, 255, 0.8)", // צבע רקע שונה
                       }}
                     >
                       <AutoAwesomeIcon fontSize="small" />

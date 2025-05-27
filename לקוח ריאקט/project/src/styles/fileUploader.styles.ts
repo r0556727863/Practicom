@@ -1,95 +1,215 @@
+// export const fileUploaderStyles = {
+//     card: {
+//       maxWidth: 500,
+//       mx: "auto",
+//       borderRadius: 4,
+//       boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)",
+//       position: "relative",
+//       overflow: "visible",
+//       background: "rgba(255, 255, 255, 0.9)",
+//       backdropFilter: "blur(10px)",
+//       border: "1px solid rgba(255, 255, 255, 0.2)",
+//     },
+//     closeButton: {
+//       position: "absolute",
+//       top: 8,
+//       right: 8,
+//       zIndex: 1,
+//       bgcolor: "rgba(0,0,0,0.05)",
+//       "&:hover": {
+//         bgcolor: "rgba(0,0,0,0.1)",
+//       },
+//     },
+//     cardContent: {
+//       p: 4,
+//     },
+//     headerBox: {
+//       display: "flex",
+//       flexDirection: "column",
+//       alignItems: "center",
+//       mb: 3,
+//     },
+//     avatar: {
+//       width: 70,
+//       height: 70,
+//       bgcolor: "#ff758c",
+//       mb: 2,
+//       boxShadow: "0 4px 12px rgba(255, 117, 140, 0.3)",
+//     },
+//     avatarIcon: {
+//       fontSize: 40,
+//     },
+//     dropZone: {
+//       border: "2px dashed rgba(255, 117, 140, 0.3)",
+//       borderRadius: 2,
+//       p: 3,
+//       textAlign: "center",
+//       mb: 3,
+//       transition: "all 0.2s",
+//       "&:hover": {
+//         borderColor: "#ff758c",
+//         bgcolor: "rgba(255, 117, 140, 0.05)",
+//       },
+//     },
+//     dropZoneContent: {
+//       cursor: "pointer",
+//       py: 2,
+//     },
+//     uploadIcon: {
+//       fontSize: 48,
+//       color: "#ff758c",
+//       mb: 1,
+//     },
+//     progressContainer: {
+//       mb: 3,
+//     },
+//     progressLabels: {
+//       display: "flex",
+//       justifyContent: "space-between",
+//       mb: 1,
+//     },
+//     progressBar: {
+//       borderRadius: 1,
+//       height: 8,
+//       "& .MuiLinearProgress-bar": {
+//         background: "linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%)",
+//       },
+//     },
+//     alert: {
+//       mb: 3,
+//       borderRadius: 2,
+//     },
+//     uploadButton: {
+//       mt: 2,
+//       borderRadius: 2,
+//       py: 1.5,
+//       background: "linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%)",
+//       boxShadow: "0 4px 12px rgba(255, 117, 140, 0.3)",
+//       transition: "transform 0.3s ease, box-shadow 0.3s ease",
+//       "&:hover": {
+//         transform: "translateY(-3px)",
+//         boxShadow: "0 6px 16px rgba(255, 117, 140, 0.4)",
+//       },
+//     },
+//   }
 export const fileUploaderStyles = {
-    card: {
-      maxWidth: 500,
-      mx: "auto",
-      borderRadius: 4,
-      boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)",
-      position: "relative",
-      overflow: "visible",
-      background: "rgba(255, 255, 255, 0.9)",
-      backdropFilter: "blur(10px)",
-      border: "1px solid rgba(255, 255, 255, 0.2)",
+  card: {
+    borderRadius: 20,
+    background: "rgba(255, 255, 255, 0.08)",
+    backdropFilter: "blur(30px)",
+    border: "1px solid rgba(255, 255, 255, 0.15)",
+    boxShadow: "0 20px 60px rgba(0, 0, 0, 0.3)",
+    position: "relative",
+    overflow: "hidden",
+    maxWidth: 500,
+    mx: "auto",
+  },
+  closeButton: {
+    position: "absolute",
+    top: 12,
+    right: 12,
+    background: "rgba(255, 255, 255, 0.1)",
+    backdropFilter: "blur(20px)",
+    border: "1px solid rgba(255, 255, 255, 0.2)",
+    color: "white",
+    zIndex: 10,
+    width: 40,
+    height: 40,
+    borderRadius: 10,
+    "&:hover": {
+      background: "rgba(255, 110, 199, 0.2)",
+      transform: "scale(1.05)",
     },
-    closeButton: {
-      position: "absolute",
-      top: 8,
-      right: 8,
-      zIndex: 1,
-      bgcolor: "rgba(0,0,0,0.05)",
-      "&:hover": {
-        bgcolor: "rgba(0,0,0,0.1)",
-      },
+    transition: "all 0.3s ease",
+
+  },
+  cardContent: {
+    p: 3,
+  },
+  headerBox: {
+    textAlign: "center",
+    mb: 3,
+    pt: 2,
+  },
+  avatar: {
+    width: 60,
+    height: 60,
+    mx: "auto",
+    mb: 2,
+    background: "linear-gradient(135deg, #00d4ff 0%, #9c27b0 50%, #ff6ec7 100%)",
+    backdropFilter: "blur(20px)",
+    border: "2px solid rgba(255, 255, 255, 0.3)",
+    boxShadow: "0 8px 25px rgba(0, 212, 255, 0.3)",
+  },
+  avatarIcon: {
+    fontSize: 30,
+    color: "white",
+  },
+  dropZone: {
+    border: "2px dashed rgba(0, 212, 255, 0.5)",
+    borderRadius: 15,
+    p: 3,
+    textAlign: "center",
+    cursor: "pointer",
+    background: "rgba(255, 255, 255, 0.05)",
+    backdropFilter: "blur(20px)",
+    transition: "all 0.3s ease",
+    "&:hover": {
+      borderColor: "#00d4ff",
+      background: "rgba(0, 212, 255, 0.1)",
+      transform: "scale(1.01)",
     },
-    cardContent: {
-      p: 4,
+    mb: 2,
+  },
+  dropZoneContent: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: 1,
+  },
+  uploadIcon: {
+    fontSize: 50,
+    color: "#00d4ff",
+    filter: "drop-shadow(0 4px 15px rgba(0, 212, 255, 0.3))",
+    mb: 1,
+  },
+  progressContainer: {
+    mb: 2,
+  },
+  progressLabels: {
+    display: "flex",
+    justifyContent: "space-between",
+    mb: 1,
+  },
+  progressBar: {
+    borderRadius: 8,
+    height: 6,
+    "& .MuiLinearProgress-bar": {
+      background: "linear-gradient(135deg, #00d4ff 0%, #9c27b0 50%, #ff6ec7 100%)",
     },
-    headerBox: {
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      mb: 3,
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
+  },
+  alert: {
+    borderRadius: 12,
+    mb: 2,
+    backdropFilter: "blur(20px)",
+    border: "1px solid rgba(255, 255, 255, 0.15)",
+  },
+  uploadButton: {
+    borderRadius: 15,
+    py: 1.5,
+    background: "linear-gradient(135deg, #00d4ff 0%, #9c27b0 50%, #ff6ec7 100%)",
+    backdropFilter: "blur(20px)",
+    border: "1px solid rgba(255, 255, 255, 0.2)",
+    boxShadow: "0 8px 25px rgba(0, 212, 255, 0.3)",
+    transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+    "&:hover": {
+      transform: "translateY(-2px) scale(1.02)",
+      boxShadow: "0 12px 35px rgba(0, 212, 255, 0.5)",
+      background: "linear-gradient(135deg, #00b8e6 0%, #8e24aa 50%, #e91e63 100%)",
     },
-    avatar: {
-      width: 70,
-      height: 70,
-      bgcolor: "#ff758c",
-      mb: 2,
-      boxShadow: "0 4px 12px rgba(255, 117, 140, 0.3)",
+    "&:disabled": {
+      opacity: 0.7,
     },
-    avatarIcon: {
-      fontSize: 40,
-    },
-    dropZone: {
-      border: "2px dashed rgba(255, 117, 140, 0.3)",
-      borderRadius: 2,
-      p: 3,
-      textAlign: "center",
-      mb: 3,
-      transition: "all 0.2s",
-      "&:hover": {
-        borderColor: "#ff758c",
-        bgcolor: "rgba(255, 117, 140, 0.05)",
-      },
-    },
-    dropZoneContent: {
-      cursor: "pointer",
-      py: 2,
-    },
-    uploadIcon: {
-      fontSize: 48,
-      color: "#ff758c",
-      mb: 1,
-    },
-    progressContainer: {
-      mb: 3,
-    },
-    progressLabels: {
-      display: "flex",
-      justifyContent: "space-between",
-      mb: 1,
-    },
-    progressBar: {
-      borderRadius: 1,
-      height: 8,
-      "& .MuiLinearProgress-bar": {
-        background: "linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%)",
-      },
-    },
-    alert: {
-      mb: 3,
-      borderRadius: 2,
-    },
-    uploadButton: {
-      mt: 2,
-      borderRadius: 2,
-      py: 1.5,
-      background: "linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%)",
-      boxShadow: "0 4px 12px rgba(255, 117, 140, 0.3)",
-      transition: "transform 0.3s ease, box-shadow 0.3s ease",
-      "&:hover": {
-        transform: "translateY(-3px)",
-        boxShadow: "0 6px 16px rgba(255, 117, 140, 0.4)",
-      },
-    },
-  }
-  
+  },
+}
