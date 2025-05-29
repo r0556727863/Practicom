@@ -227,7 +227,7 @@ const ImageDialog: React.FC<ImageDialogProps> = ({
 
       // יצירת URL להורדה דרך השרת
       const filename = image.title || `image_${image.photoId}.jpg`
-      const downloadUrl = `https://localhost:7259/api/Download/image?url=${encodeURIComponent(image.url)}&filename=${encodeURIComponent(filename)}`
+      const downloadUrl = `${process.env.REACT_APP_API_URL}/Download/image?url=${encodeURIComponent(image.url)}&filename=${encodeURIComponent(filename)}`
 
       // הורדת התמונה באמצעות fetch
       const response = await fetch(downloadUrl)

@@ -104,7 +104,8 @@ const FileUploader: React.FC<FileUploaderProps> = ({ open, onClose, albumId }) =
         fileName = uniqueFileName
       }
 
-      const response = await axios.get("https://localhost:7259/api/UploadFile/presigned-url", {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/UploadFile/presigned-url`,
+        {
         params: {
           fileName: fileName,
           albumName: albumId,
@@ -138,7 +139,8 @@ const FileUploader: React.FC<FileUploaderProps> = ({ open, onClose, albumId }) =
         UpdatedAt: new Date().toISOString(),
       }
 
-      const postResponse = await axios.post("https://localhost:7259/api/Photo/photo", photoData, {
+      const postResponse = await axios.post(  `${process.env.REACT_APP_API_URL}/Photo/photo`,
+        photoData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",

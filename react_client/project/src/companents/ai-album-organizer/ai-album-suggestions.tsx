@@ -383,7 +383,7 @@ const AIAlbumSuggestions: React.FC<AIAlbumSuggestionsProps> = ({ open, onClose }
 
     try {
       const response = await axios.post(
-        "https://localhost:7259/api/AiDescription/aidescription",
+        `${process.env.REACT_APP_API_URL}/AiDescription/aidescription`,
         {
           GeneratedText: prompt,
         },

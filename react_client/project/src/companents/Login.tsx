@@ -42,7 +42,7 @@ export default function Login() {
 
   const loginUser = async (user: { Email: string; Password: string }): Promise<LoginResponse | null> => {
     try {
-      const response = await axios.post<LoginResponse>("https://localhost:7259/api/Auth/login", user, {
+      const response = await axios.post<LoginResponse>(`${process.env.REACT_APP_API_URL}/Auth/login`,user, {
         headers: { "Content-Type": "application/json" },
       })
       return response.data

@@ -52,7 +52,7 @@ const AlbumUploader: React.FC = () => {
     setLoading(true)
     try {
       const response = await axios.post(
-        "https://localhost:7259/api/Album/album",
+        `${process.env.REACT_APP_API_URL}/Album/album`,
         {
           title: albumTitle,
           description: albumDescription,

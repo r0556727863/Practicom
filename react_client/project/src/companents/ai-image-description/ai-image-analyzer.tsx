@@ -307,7 +307,7 @@ const AIImageAnalyzer: React.FC<AIImageAnalyzerProps> = ({
 
     try {
       const response = await axios.post(
-        "https://localhost:7259/api/AiDescription/describe",
+        `${process.env.REACT_APP_API_URL}/AiDescription/describe`,
         {
           generatedText: `תאר בפירוט את התמונה הבאה: ${imageTitle}`,
         },
