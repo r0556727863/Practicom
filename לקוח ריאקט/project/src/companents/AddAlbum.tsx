@@ -29,7 +29,7 @@ const AlbumUploader: React.FC = () => {
   const [albumTitle, setAlbumTitle] = useState("")
   const [albumDescription, setAlbumDescription] = useState("")
   const [message, setMessage] = useState("")
-  const [albumId, setAlbumId] = useState<number | null>(null)
+  const [, setAlbumId] = useState<number | null>(null)
   const [isSuccess, setIsSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
   const { user } = useUserContext()

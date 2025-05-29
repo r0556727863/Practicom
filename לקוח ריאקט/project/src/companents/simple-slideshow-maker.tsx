@@ -42,7 +42,6 @@ interface SimpleSlideshowMakerProps {
   albumId: number
 }
 
-type TransitionEffect = "fade" | "slide" | "zoom"
 
 const MUSIC_OPTIONS = [
   { id: "happy", name: "מוזיקה שמחה", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },

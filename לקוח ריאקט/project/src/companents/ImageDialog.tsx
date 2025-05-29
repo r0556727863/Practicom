@@ -94,12 +94,11 @@ const ImageDialog: React.FC<ImageDialogProps> = ({
   albumTitle,
   onDeleteImage,
   onUpdateImage,
-  onUploadImage,
 }) => {
   const [editingPhotoId, setEditingPhotoId] = useState<number | null>(null)
   const [newTitle, setNewTitle] = useState<string>("")
   const [saving, setSaving] = useState(false)
-  const [uploadOpen, setUploadOpen] = useState(false)
+  const [, setUploadOpen] = useState(false)
   const [selectedImage, setSelectedImage] = useState<Image | null>(null)
   const [selectedImageIndex, setSelectedImageIndex] = useState<number>(-1)
   const [tabValue, setTabValue] = useState(0)

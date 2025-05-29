@@ -99,9 +99,7 @@ const FolderImages: React.FC = () => {
     setImageToDelete(photoId);
     setDeleteDialogOpen(true);
   };
-  const handleSnackbarClose = () => {
-    setSnackbarOpen(false);
-  };
+ 
 
   const handleDeleteImage = async () => {
     if (!token || imageToDelete === null) {
