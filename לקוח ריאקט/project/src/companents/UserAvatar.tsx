@@ -1,31 +1,3 @@
-// import { Avatar } from "@mui/material";
-// import { useUserContext } from "../context/UserContext";
-
-// const UserAvatar = () => {
-//   const { user } = useUserContext();
-
-//   if (!user) return null;
-//   const firstLetter = user.UserName?.charAt(0).toUpperCase();
-
-//   return (
-//     <Avatar
-//       sx={{
-//         bgcolor: "pink",
-//         width: 40,
-//         height: 40,
-//         position: "fixed",
-//         top: 16,
-//         right: 16,
-//       }}
-//     >
-//       {firstLetter}
-//     </Avatar>
-//   );
-// };
-
-// export default UserAvatar;
-"use client"
-
 import type React from "react"
 import { Avatar, Box, Tooltip, Menu, MenuItem, ListItemIcon, Typography } from "@mui/material"
 import { useUserContext } from "../context/UserContext"

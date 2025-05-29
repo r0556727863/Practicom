@@ -38,11 +38,15 @@ const AlbumUploader: React.FC = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (!token || !userId) {
-      setMessage("יש להתחבר קודם.")
-      navigate("/Login")
+    const storedUser = localStorage.getItem("user")
+    const token = localStorage.getItem("token")
+  
+    // אם אין משתמש בזיכרון וגם אין משתמש בשמירה, או שאין טוקן
+    if ((!user && !storedUser) || !token) {
+      navigate("/login")
     }
-  }, [token, userId, navigate])
+  }, [user, navigate])
+  
 
   const submitAlbum = async () => {
     setLoading(true)

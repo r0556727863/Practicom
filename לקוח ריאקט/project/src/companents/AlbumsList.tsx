@@ -347,30 +347,13 @@
 // }
 
 // export default FolderList
-"use client"
 
 import { useEffect, useRef, useState } from "react"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import {
-  Container,
-  Typography,
-  Button,
-  Grid,
-  Box,
-  TextField,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  CircularProgress,
-  IconButton,
-  Tooltip,
-  Alert,
-  Fab,
-  SvgIcon,
-  Snackbar,
-  InputAdornment,
+  Container, Typography, Button, Grid, Box, TextField, Dialog, DialogTitle, DialogContent, DialogActions, CircularProgress,
+  IconButton, Tooltip, Alert, Fab, SvgIcon, Snackbar, InputAdornment,
 } from "@mui/material"
 import FolderIcon from "@mui/icons-material/Folder"
 import EditIcon from "@mui/icons-material/Edit"
@@ -416,21 +399,19 @@ const FolderList = () => {
     }
   }, [isEditing])
 
+
   useEffect(() => {
     const fetchFolders = async () => {
-      if (!token || !user?.UserId) {
-        setError("המשתמש אינו מחובר. אנא התחבר.")
-        setLoading(false)
-        navigate("/Login")
-        return
-      }
+      if (!token || !user?.UserId) return // עדיין לא מוכן – אל תעשה כלום
 
       try {
         const response = await axios.get("https://localhost:7259/api/album", {
           headers: { Authorization: `Bearer ${token}` },
         })
 
-        const userFolders = response.data.filter((folder: Folder) => folder.userId === user?.UserId)
+        const userFolders = response.data.filter(
+          (folder: Folder) => folder.userId === user.UserId
+        )
         setFolders(userFolders)
         setFilteredFolders(userFolders)
       } catch (err) {
@@ -441,7 +422,9 @@ const FolderList = () => {
     }
 
     fetchFolders()
-  }, [user])
+  }, [user, token]) // נקרא רק כשהם באמת זמינים
+
+
 
   // חיפוש אלבומים רק לפי שם
   useEffect(() => {
@@ -594,8 +577,15 @@ const FolderList = () => {
             <Typography variant="h5" gutterBottom fontWeight="bold" color="white">
               {searchTerm ? "לא נמצאו אלבומים" : "אין אלבומים להצגה"}
             </Typography>
-            <Typography variant="body1" color="rgba(255,255,255,0.8)" paragraph sx={folderListStyles.emptyStateText}>
-              {searchTerm ? "נסה לחפש במילים אחרות או נקה את החיפוש" : "התחל ליצור אלבומים חדשים לארגון התמונות שלך"}
+            <Typography
+              variant="body1"
+              color="rgba(255,255,255,0.8)"
+              paragraph
+              sx={folderListStyles.emptyStateText}
+            >
+              {searchTerm
+                ? "נסה לחפש במילים אחרות או נקה את החיפוש"
+                : "התחל ליצור אלבומים חדשים לארגון התמונות שלך"}
             </Typography>
             {!searchTerm && (
               <Button
@@ -642,7 +632,7 @@ const FolderList = () => {
                         }}
                         sx={folderListStyles.editButton}
                       >
-                      <EditIcon fontSize="small" />
+                        <EditIcon fontSize="small" />
                       </IconButton>
                     </Tooltip>
                     <Tooltip title="מחק">
@@ -754,5 +744,4 @@ const FolderList = () => {
     </Box>
   )
 }
-
 export default FolderList

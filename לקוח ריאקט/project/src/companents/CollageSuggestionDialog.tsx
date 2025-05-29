@@ -1,5 +1,3 @@
-// "use client"
-
 // import type React from "react"
 // import { useState, useRef, useEffect } from "react"
 // import {
@@ -33,20 +31,19 @@
 
 // const SimpleCollageMaker: React.FC<SimpleCollageMakerProps> = ({ open, onClose, imageUrl, onSaveCollage }) => {
 //   const [layout, setLayout] = useState<CollageLayout>("original")
-//   const [borderWidth, setBorderWidth] = useState<number>(5) // מסגרת צרה יותר כברירת מחדל
-//   const [borderColor, setBorderColor] = useState<string>("#ff5252")
+//   const [borderWidth, setBorderWidth] = useState<number>(5)
+//   const [borderColor, setBorderColor] = useState<string>("#00d4ff")
 //   const [backgroundColor, setBackgroundColor] = useState<string>("#ffffff")
 //   const [polaroidText, setPolaroidText] = useState<string>("My Photo")
 //   const canvasRef = useRef<HTMLCanvasElement>(null)
 //   const [previewUrl, setPreviewUrl] = useState<string | null>(null)
 //   const imageRef = useRef<HTMLImageElement | null>(null)
 
-//   // טען את התמונה כשהקומפוננטה נטענת או כשה-URL משתנה
 //   useEffect(() => {
 //     if (!imageUrl) return
 
 //     const img = new Image()
-//     img.crossOrigin = "anonymous" // חשוב למניעת שגיאות CORS
+//     img.crossOrigin = "anonymous"
 //     img.src = imageUrl
 //     img.onload = () => {
 //       imageRef.current = img
@@ -54,7 +51,6 @@
 //     }
 //   }, [imageUrl])
 
-//   // רנדר מחדש כשמשתנים הפרמטרים
 //   useEffect(() => {
 //     if (imageRef.current) {
 //       renderCollage()
@@ -69,38 +65,28 @@
 //     if (!ctx) return
 
 //     const img = imageRef.current
-
-//     // קבע גודל קנבס קבוע
 //     const canvasWidth = 600
 //     const canvasHeight = 600
 
 //     canvas.width = canvasWidth
 //     canvas.height = canvasHeight
 
-//     // נקה את הקנבס
 //     ctx.clearRect(0, 0, canvasWidth, canvasHeight)
-
-//     // צבע רקע
 //     ctx.fillStyle = backgroundColor
 //     ctx.fillRect(0, 0, canvasWidth, canvasHeight)
 
-//     // חשב את היחס של התמונה המקורית
 //     const imgRatio = img.width / img.height
 
-//     // פונקציה לציור תמונה תוך שמירה על היחס המקורי
 //     const drawImageMaintainAspect = (x: number, y: number, width: number, height: number) => {
 //       let drawWidth = width
 //       let drawHeight = height
 //       let offsetX = 0
 //       let offsetY = 0
 
-//       // חשב את הגודל החדש תוך שמירה על היחס
 //       if (width / height > imgRatio) {
-//         // אם המסגרת רחבה יותר מהתמונה
 //         drawWidth = height * imgRatio
 //         offsetX = (width - drawWidth) / 2
 //       } else {
-//         // אם המסגרת גבוהה יותר מהתמונה
 //         drawHeight = width / imgRatio
 //         offsetY = (height - drawHeight) / 2
 //       }
@@ -108,14 +94,12 @@
 //       ctx.drawImage(img, x + offsetX, y + offsetY, drawWidth, drawHeight)
 //     }
 
-//     // פונקציה לציור צורת לב
 //     const drawHeart = (x: number, y: number, width: number, height: number) => {
 //       ctx.save()
 //       ctx.beginPath()
 
 //       const topCurveHeight = height * 0.3
 
-//       // ציור הלב
 //       ctx.moveTo(x + width / 2, y + height)
 //       ctx.bezierCurveTo(x, y + height * 0.7, x, y, x + width / 2, y + topCurveHeight)
 //       ctx.bezierCurveTo(x + width, y, x + width, y + height * 0.7, x + width / 2, y + height)
@@ -123,13 +107,11 @@
 //       ctx.closePath()
 //       ctx.clip()
 
-//       // צייר את התמונה בתוך הלב
 //       drawImageMaintainAspect(x, y, width, height)
 
 //       ctx.restore()
 //     }
 
-//     // פונקציה לציור עיגול
 //     const drawCircle = (x: number, y: number, radius: number) => {
 //       ctx.save()
 //       ctx.beginPath()
@@ -137,13 +119,11 @@
 //       ctx.closePath()
 //       ctx.clip()
 
-//       // צייר את התמונה בתוך העיגול
 //       drawImageMaintainAspect(x, y, radius * 2, radius * 2)
 
 //       ctx.restore()
 //     }
 
-//     // פונקציה לציור כוכב
 //     const drawStar = (x: number, y: number, width: number, height: number) => {
 //       ctx.save()
 //       ctx.beginPath()
@@ -170,31 +150,24 @@
 //       ctx.closePath()
 //       ctx.clip()
 
-//       // צייר את התמונה בתוך הכוכב
 //       drawImageMaintainAspect(x, y, width, height)
 
 //       ctx.restore()
 //     }
 
-//     // צייר לפי הפריסה שנבחרה
 //     switch (layout) {
 //       case "original":
-//         // תמונה מקורית - במרכז עם רקע
 //         const originalSize = Math.min(canvasWidth, canvasHeight) * 0.8
 //         const originalX = (canvasWidth - originalSize) / 2
 //         const originalY = (canvasHeight - originalSize) / 2
-
-//         // צייר את התמונה
 //         drawImageMaintainAspect(originalX, originalY, originalSize, originalSize)
 //         break
 
 //       case "split2":
-//         // חלוקה לשניים עם מסגרת מסביב לכל תמונה בנפרד
 //         const halfWidth = (canvasWidth - borderWidth * 6) / 2
 //         const halfHeight = canvasHeight * 0.7
 //         const halfY = (canvasHeight - halfHeight) / 2
 
-//         // תמונה שמאלית עם מסגרת
 //         ctx.fillStyle = borderColor
 //         ctx.fillRect(
 //           canvasWidth * 0.2 - borderWidth,
@@ -204,7 +177,6 @@
 //         )
 //         drawImageMaintainAspect(canvasWidth * 0.2, halfY, halfWidth, halfHeight)
 
-//         // תמונה ימנית עם מסגרת
 //         ctx.fillStyle = borderColor
 //         ctx.fillRect(
 //           canvasWidth * 0.8 - halfWidth - borderWidth,
@@ -216,15 +188,12 @@
 //         break
 
 //       case "split4":
-//         // חלוקה לארבע עם מסגרת מסביב לכל תמונה בנפרד
 //         const quarterSize = canvasWidth * 0.35
 //         const margin = (canvasWidth - quarterSize * 2) / 3
 
-//         // צייר את הרקע
 //         ctx.fillStyle = backgroundColor
 //         ctx.fillRect(0, 0, canvasWidth, canvasHeight)
 
-//         // תמונה שמאלית עליונה עם מסגרת
 //         ctx.fillStyle = borderColor
 //         ctx.fillRect(
 //           margin - borderWidth,
@@ -234,7 +203,6 @@
 //         )
 //         drawImageMaintainAspect(margin, margin, quarterSize, quarterSize)
 
-//         // תמונה ימנית עליונה עם מסגרת
 //         ctx.fillStyle = borderColor
 //         ctx.fillRect(
 //           margin * 2 + quarterSize - borderWidth,
@@ -244,7 +212,6 @@
 //         )
 //         drawImageMaintainAspect(margin * 2 + quarterSize, margin, quarterSize, quarterSize)
 
-//         // תמונה שמאלית תחתונה עם מסגרת
 //         ctx.fillStyle = borderColor
 //         ctx.fillRect(
 //           margin - borderWidth,
@@ -254,7 +221,6 @@
 //         )
 //         drawImageMaintainAspect(margin, margin * 2 + quarterSize, quarterSize, quarterSize)
 
-//         // תמונה ימנית תחתונה עם מסגרת
 //         ctx.fillStyle = borderColor
 //         ctx.fillRect(
 //           margin * 2 + quarterSize - borderWidth,
@@ -266,7 +232,6 @@
 //         break
 
 //       case "polaroid":
-//         // אפקט פולארויד
 //         const polaroidWidth = canvasWidth * 0.7
 //         const polaroidHeight = polaroidWidth * 1.2
 //         const polaroidX = (canvasWidth - polaroidWidth) / 2
@@ -274,11 +239,9 @@
 //         const frameWidth = 20
 //         const bottomFrame = 60
 
-//         // מסגרת לבנה
 //         ctx.fillStyle = "#ffffff"
 //         ctx.fillRect(polaroidX, polaroidY, polaroidWidth, polaroidHeight)
 
-//         // צל קל למסגרת
 //         ctx.shadowColor = "rgba(0, 0, 0, 0.2)"
 //         ctx.shadowBlur = 10
 //         ctx.shadowOffsetX = 5
@@ -286,13 +249,11 @@
 //         ctx.fillRect(polaroidX, polaroidY, polaroidWidth, polaroidHeight)
 //         ctx.shadowColor = "transparent"
 
-//         // התמונה עצמה
 //         const polaroidImgWidth = polaroidWidth - frameWidth * 2
 //         const polaroidImgHeight = polaroidHeight - frameWidth - bottomFrame
 
 //         drawImageMaintainAspect(polaroidX + frameWidth, polaroidY + frameWidth, polaroidImgWidth, polaroidImgHeight)
 
-//         // הוסף טקסט בתחתית הפולארויד
 //         ctx.font = "24px Arial"
 //         ctx.fillStyle = "#333"
 //         ctx.textAlign = "center"
@@ -300,12 +261,10 @@
 //         break
 
 //       case "frame":
-//         // מסגרת פשוטה צמודה לתמונה
 //         const frameSize = Math.min(canvasWidth, canvasHeight) * 0.7
 //         const frameX = (canvasWidth - frameSize) / 2
 //         const frameY = (canvasHeight - frameSize) / 2
 
-//         // צייר את המסגרת
 //         ctx.fillStyle = borderColor
 //         ctx.fillRect(
 //           frameX - borderWidth,
@@ -314,17 +273,14 @@
 //           frameSize + borderWidth * 2,
 //         )
 
-//         // התמונה
 //         drawImageMaintainAspect(frameX, frameY, frameSize, frameSize)
 //         break
 
 //       case "heart":
-//         // קולאז' בצורת לב
 //         const heartSize = Math.min(canvasWidth, canvasHeight) * 0.7
 //         const heartX = (canvasWidth - heartSize) / 2
 //         const heartY = (canvasHeight - heartSize) / 2
 
-//         // צייר את המסגרת בצורת לב
 //         if (borderWidth > 0) {
 //           ctx.fillStyle = borderColor
 //           ctx.beginPath()
@@ -343,18 +299,15 @@
 //           ctx.fill()
 //         }
 
-//         // צייר את התמונה בצורת לב
 //         drawHeart(heartX, heartY, heartSize, heartSize)
 //         break
 
 //       case "circle":
-//         // קולאז' בצורת עיגול
 //         const circleSize = Math.min(canvasWidth, canvasHeight) * 0.7
 //         const circleX = (canvasWidth - circleSize) / 2
 //         const circleY = (canvasHeight - circleSize) / 2
 //         const radius = circleSize / 2
 
-//         // צייר את המסגרת בצורת עיגול
 //         if (borderWidth > 0) {
 //           ctx.fillStyle = borderColor
 //           ctx.beginPath()
@@ -363,17 +316,14 @@
 //           ctx.fill()
 //         }
 
-//         // צייר את התמונה בצורת עיגול
 //         drawCircle(circleX, circleY, radius)
 //         break
 
 //       case "star":
-//         // קולאז' בצורת כוכב
 //         const starSize = Math.min(canvasWidth, canvasHeight) * 0.7
 //         const starX = (canvasWidth - starSize) / 2
 //         const starY = (canvasHeight - starSize) / 2
 
-//         // צייר את המסגרת בצורת כוכב
 //         if (borderWidth > 0) {
 //           ctx.fillStyle = borderColor
 
@@ -401,12 +351,10 @@
 //           ctx.fill()
 //         }
 
-//         // צייר את התמונה בצורת כוכב
 //         drawStar(starX, starY, starSize, starSize)
 //         break
 //     }
 
-//     // שמור את התוצאה כ-URL
 //     setPreviewUrl(canvas.toDataURL("image/jpeg"))
 //   }
 
@@ -418,26 +366,54 @@
 //   }
 
 //   return (
-//     <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
-//       <DialogTitle sx={{ borderBottom: "1px solid #eee", padding: "16px 24px" }}>
+//     <Dialog
+//       open={open}
+//       onClose={onClose}
+//       maxWidth="md"
+//       fullWidth
+//       PaperProps={{
+//         sx: {
+//           borderRadius: 25,
+//           background: "rgba(255, 255, 255, 0.08)",
+//           backdropFilter: "blur(30px)",
+//           border: "1px solid rgba(255, 255, 255, 0.15)",
+//           boxShadow: "0 25px 80px rgba(0, 0, 0, 0.3)",
+//         },
+//       }}
+//     >
+//       <DialogTitle
+//         sx={{
+//           background: "linear-gradient(135deg, #00d4ff 0%, #9c27b0 50%, #ff6ec7 100%)",
+//           color: "white",
+//           position: "relative",
+//           textAlign: "center",
+//           py: 3,
+//         }}
+//       >
 //         <Typography variant="h6" component="div">
-//           עורך קולאז' פשוט
+//           עורך קולאז' מתקדם
 //         </Typography>
 //         <IconButton
 //           aria-label="close"
 //           onClick={onClose}
 //           sx={{
 //             position: "absolute",
-//             right: 8,
-//             top: 8,
-//             color: (theme) => theme.palette.grey[500],
+//             right: 16,
+//             top: "50%",
+//             transform: "translateY(-50%)",
+//             color: "white",
+//             background: "rgba(255, 255, 255, 0.1)",
+//             "&:hover": {
+//               background: "rgba(255, 255, 255, 0.2)",
+//               transform: "translateY(-50%) scale(1.1)",
+//             },
 //           }}
 //         >
 //           <CloseIcon />
 //         </IconButton>
 //       </DialogTitle>
 
-//       <DialogContent sx={{ padding: "24px" }}>
+//       <DialogContent sx={{ padding: "24px", background: "rgba(255, 255, 255, 0.02)" }}>
 //         <Grid container spacing={3}>
 //           <Grid >
 //             <Box
@@ -446,38 +422,50 @@
 //                 justifyContent: "center",
 //                 alignItems: "center",
 //                 mb: 2,
-//                 border: "1px solid #ddd",
-//                 borderRadius: 1,
+//                 borderRadius: 20,
 //                 p: 2,
 //                 height: 400,
 //                 overflow: "hidden",
-//                 backgroundColor: "#f5f5f5",
+//                 background: "rgba(255, 255, 255, 0.05)",
+//                 backdropFilter: "blur(20px)",
+//                 border: "1px solid rgba(255, 255, 255, 0.1)",
 //               }}
 //             >
-//               <canvas ref={canvasRef} style={{ maxWidth: "100%", maxHeight: "100%", display: "block" }} />
+//               <canvas
+//                 ref={canvasRef}
+//                 style={{ maxWidth: "100%", maxHeight: "100%", display: "block", borderRadius: "15px" }}
+//               />
 //             </Box>
 //           </Grid>
 
-//           <Grid >
+//           <Grid  >
 //             <FormControl fullWidth sx={{ mb: 3, mt: 2 }}>
 //               <InputLabel
-//                 id="collage-style-label"
 //                 sx={{
-//                   backgroundColor: "white",
-//                   px: 1,
-//                   top: "-8px",
-//                   "&.MuiInputLabel-shrink": {
-//                     top: "0px",
-//                   },
+//                   color: "rgba(255, 255, 255, 0.7)",
+//                   "&.Mui-focused": { color: "#00d4ff" },
 //                 }}
 //               >
 //                 סגנון קולאז'
 //               </InputLabel>
 //               <Select
-//                 labelId="collage-style-label"
 //                 value={layout}
 //                 onChange={(e) => setLayout(e.target.value as CollageLayout)}
 //                 label="סגנון קולאז'"
+//                 sx={{
+//                   borderRadius: 15,
+//                   backgroundColor: "rgba(255, 255, 255, 0.08)",
+//                   color: "white",
+//                   "& .MuiOutlinedInput-notchedOutline": {
+//                     borderColor: "rgba(255, 255, 255, 0.15)",
+//                   },
+//                   "&:hover .MuiOutlinedInput-notchedOutline": {
+//                     borderColor: "#00d4ff",
+//                   },
+//                   "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+//                     borderColor: "#00d4ff",
+//                   },
+//                 }}
 //               >
 //                 <MenuItem value="original">תמונה מקורית</MenuItem>
 //                 <MenuItem value="split2">חלוקה לשניים</MenuItem>
@@ -490,23 +478,36 @@
 //               </Select>
 //             </FormControl>
 
-//             <Typography gutterBottom>עובי מסגרת</Typography>
+//             <Typography gutterBottom sx={{ color: "white", mb: 1 }}>
+//               עובי מסגרת
+//             </Typography>
 //             <Slider
 //               value={borderWidth}
 //               onChange={(_, value) => setBorderWidth(value as number)}
 //               min={0}
 //               max={30}
 //               valueLabelDisplay="auto"
-//               sx={{ mb: 3 }}
+//               sx={{
+//                 mb: 3,
+//                 color: "#00d4ff",
+//                 "& .MuiSlider-thumb": {
+//                   background: "linear-gradient(135deg, #00d4ff 0%, #ff6ec7 100%)",
+//                 },
+//                 "& .MuiSlider-track": {
+//                   background: "linear-gradient(135deg, #00d4ff 0%, #ff6ec7 100%)",
+//                 },
+//               }}
 //             />
 
-//             <Typography gutterBottom>צבע מסגרת</Typography>
+//             <Typography gutterBottom sx={{ color: "white", mb: 1 }}>
+//               צבע מסגרת
+//             </Typography>
 //             <Box sx={{ display: "flex", gap: 1, mb: 3, flexWrap: "wrap" }}>
 //               {[
-//                 "#ff5252", // אדום בהיר
-//                 "#2196f3", // כחול
-//                 "#ff4081", // ורוד
+//                 "#00d4ff", // ציאן
 //                 "#9c27b0", // סגול
+//                 "#ff6ec7", // ורוד
+//                 "#ff5252", // אדום
 //                 "#ffd600", // צהוב
 //                 "#4caf50", // ירוק
 //                 "#000000", // שחור
@@ -519,15 +520,22 @@
 //                     width: 30,
 //                     height: 30,
 //                     backgroundColor: color,
-//                     border: borderColor === color ? "3px solid #333" : "1px solid #ddd",
+//                     border: borderColor === color ? "3px solid #00d4ff" : "1px solid rgba(255,255,255,0.3)",
 //                     borderRadius: "50%",
 //                     cursor: "pointer",
+//                     transition: "all 0.3s ease",
+//                     "&:hover": {
+//                       transform: "scale(1.1)",
+//                       boxShadow: "0 4px 15px rgba(0, 212, 255, 0.3)",
+//                     },
 //                   }}
 //                 />
 //               ))}
 //             </Box>
 
-//             <Typography gutterBottom>צבע רקע</Typography>
+//             <Typography gutterBottom sx={{ color: "white", mb: 1 }}>
+//               צבע רקע
+//             </Typography>
 //             <Box sx={{ display: "flex", gap: 1, mb: 3, flexWrap: "wrap" }}>
 //               {[
 //                 "#ffffff", // לבן
@@ -546,9 +554,14 @@
 //                     width: 30,
 //                     height: 30,
 //                     backgroundColor: color,
-//                     border: backgroundColor === color ? "3px solid #333" : "1px solid #ddd",
+//                     border: backgroundColor === color ? "3px solid #00d4ff" : "1px solid rgba(255,255,255,0.3)",
 //                     borderRadius: "50%",
 //                     cursor: "pointer",
+//                     transition: "all 0.3s ease",
+//                     "&:hover": {
+//                       transform: "scale(1.1)",
+//                       boxShadow: "0 4px 15px rgba(0, 212, 255, 0.3)",
+//                     },
 //                   }}
 //                 />
 //               ))}
@@ -560,25 +573,68 @@
 //                 fullWidth
 //                 value={polaroidText}
 //                 onChange={(e) => setPolaroidText(e.target.value)}
-//                 sx={{ mb: 3 }}
+//                 sx={{
+//                   mb: 3,
+//                   "& .MuiOutlinedInput-root": {
+//                     borderRadius: 15,
+//                     backgroundColor: "rgba(255, 255, 255, 0.08)",
+//                     color: "white",
+//                     "& fieldset": {
+//                       borderColor: "rgba(255, 255, 255, 0.15)",
+//                     },
+//                     "&:hover fieldset": {
+//                       borderColor: "#00d4ff",
+//                     },
+//                     "&.Mui-focused fieldset": {
+//                       borderColor: "#00d4ff",
+//                     },
+//                   },
+//                   "& .MuiInputLabel-root": {
+//                     color: "rgba(255, 255, 255, 0.7)",
+//                     "&.Mui-focused": {
+//                       color: "#00d4ff",
+//                     },
+//                   },
+//                 }}
 //               />
 //             )}
 //           </Grid>
 //         </Grid>
 //       </DialogContent>
 
-//       <DialogActions sx={{ p: 2, borderTop: "1px solid #eee" }}>
-//         <Button onClick={onClose} color="inherit">
+//       <DialogActions
+//         sx={{
+//           p: 3,
+//           background: "rgba(255, 255, 255, 0.05)",
+//           borderTop: "1px solid rgba(255, 255, 255, 0.1)",
+//         }}
+//       >
+//         <Button
+//           onClick={onClose}
+//           sx={{
+//             color: "rgba(255, 255, 255, 0.7)",
+//             "&:hover": { color: "white" },
+//           }}
+//         >
 //           ביטול
 //         </Button>
 //         <Button
 //           onClick={handleSave}
 //           variant="contained"
-//           color="primary"
 //           startIcon={<SaveIcon />}
 //           sx={{
-//             background: "linear-gradient(45deg, #ff5252 30%, #ff4081 90%)",
-//             boxShadow: "0 3px 5px 2px rgba(255, 82, 82, .3)",
+//             borderRadius: 20,
+//             px: 4,
+//             background: "linear-gradient(135deg, #00d4ff 0%, #9c27b0 50%, #ff6ec7 100%)",
+//             backdropFilter: "blur(20px)",
+//             border: "1px solid rgba(255, 255, 255, 0.2)",
+//             boxShadow: "0 8px 30px rgba(0, 212, 255, 0.3)",
+//             transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+//             "&:hover": {
+//               transform: "translateY(-3px) scale(1.05)",
+//               boxShadow: "0 15px 40px rgba(0, 212, 255, 0.5)",
+//               background: "linear-gradient(135deg, #00b8e6 0%, #8e24aa 50%, #e91e63 100%)",
+//             },
 //           }}
 //         >
 //           שמור קולאז'
@@ -589,8 +645,6 @@
 // }
 
 // export default SimpleCollageMaker
-"use client"
-
 import type React from "react"
 import { useState, useRef, useEffect } from "react"
 import {
@@ -624,9 +678,9 @@ type CollageLayout = "original" | "split2" | "split4" | "polaroid" | "frame" | "
 
 const SimpleCollageMaker: React.FC<SimpleCollageMakerProps> = ({ open, onClose, imageUrl, onSaveCollage }) => {
   const [layout, setLayout] = useState<CollageLayout>("original")
-  const [borderWidth, setBorderWidth] = useState<number>(5)
+  const [borderWidth, setBorderWidth] = useState<number>(0) // הסרת המסגרת כברירת מחדל
   const [borderColor, setBorderColor] = useState<string>("#00d4ff")
-  const [backgroundColor, setBackgroundColor] = useState<string>("#ffffff")
+  const [backgroundColor, setBackgroundColor] = useState<string>("transparent") // רקע שקוף כברירת מחדל
   const [polaroidText, setPolaroidText] = useState<string>("My Photo")
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [previewUrl, setPreviewUrl] = useState<string | null>(null)
@@ -664,9 +718,14 @@ const SimpleCollageMaker: React.FC<SimpleCollageMakerProps> = ({ open, onClose, 
     canvas.width = canvasWidth
     canvas.height = canvasHeight
 
+    // ניקוי הקנבס
     ctx.clearRect(0, 0, canvasWidth, canvasHeight)
-    ctx.fillStyle = backgroundColor
-    ctx.fillRect(0, 0, canvasWidth, canvasHeight)
+    
+    // רק אם הרקע לא שקוף
+    if (backgroundColor !== "transparent") {
+      ctx.fillStyle = backgroundColor
+      ctx.fillRect(0, 0, canvasWidth, canvasHeight)
+    }
 
     const imgRatio = img.width / img.height
 
@@ -750,77 +809,91 @@ const SimpleCollageMaker: React.FC<SimpleCollageMakerProps> = ({ open, onClose, 
 
     switch (layout) {
       case "original":
-        const originalSize = Math.min(canvasWidth, canvasHeight) * 0.8
-        const originalX = (canvasWidth - originalSize) / 2
-        const originalY = (canvasHeight - originalSize) / 2
+        const originalSize = Math.min(canvasWidth, canvasHeight)
+        const originalX = 0
+        const originalY = 0
         drawImageMaintainAspect(originalX, originalY, originalSize, originalSize)
         break
 
       case "split2":
-        const halfWidth = (canvasWidth - borderWidth * 6) / 2
-        const halfHeight = canvasHeight * 0.7
-        const halfY = (canvasHeight - halfHeight) / 2
-
-        ctx.fillStyle = borderColor
-        ctx.fillRect(
-          canvasWidth * 0.2 - borderWidth,
-          halfY - borderWidth,
-          halfWidth + borderWidth * 2,
-          halfHeight + borderWidth * 2,
-        )
-        drawImageMaintainAspect(canvasWidth * 0.2, halfY, halfWidth, halfHeight)
-
-        ctx.fillStyle = borderColor
-        ctx.fillRect(
-          canvasWidth * 0.8 - halfWidth - borderWidth,
-          halfY - borderWidth,
-          halfWidth + borderWidth * 2,
-          halfHeight + borderWidth * 2,
-        )
-        drawImageMaintainAspect(canvasWidth * 0.8 - halfWidth, halfY, halfWidth, halfHeight)
+        // תיקון חלוקה לשניים - חלוקה אנכית
+        const halfWidth = canvasWidth / 2
+        const fullHeight = canvasHeight
+        
+        // חצי שמאלי
+        ctx.save()
+        ctx.beginPath()
+        ctx.rect(0, 0, halfWidth, fullHeight)
+        ctx.clip()
+        drawImageMaintainAspect(0, 0, canvasWidth, canvasHeight)
+        ctx.restore()
+        
+        // קו מפריד דק (אופציונלי)
+        if (borderWidth > 0) {
+          ctx.fillStyle = borderColor
+          ctx.fillRect(halfWidth - borderWidth/2, 0, borderWidth, fullHeight)
+        }
+        
+        // חצי ימני
+        ctx.save()
+        ctx.beginPath()
+        ctx.rect(halfWidth + (borderWidth > 0 ? borderWidth/2 : 0), 0, halfWidth - (borderWidth > 0 ? borderWidth/2 : 0), fullHeight)
+        ctx.clip()
+        drawImageMaintainAspect(0, 0, canvasWidth, canvasHeight)
+        ctx.restore()
         break
 
       case "split4":
         const quarterSize = canvasWidth * 0.35
         const margin = (canvasWidth - quarterSize * 2) / 3
 
-        ctx.fillStyle = backgroundColor
-        ctx.fillRect(0, 0, canvasWidth, canvasHeight)
+        if (backgroundColor !== "transparent") {
+          ctx.fillStyle = backgroundColor
+          ctx.fillRect(0, 0, canvasWidth, canvasHeight)
+        }
 
-        ctx.fillStyle = borderColor
-        ctx.fillRect(
-          margin - borderWidth,
-          margin - borderWidth,
-          quarterSize + borderWidth * 2,
-          quarterSize + borderWidth * 2,
-        )
+        if (borderWidth > 0) {
+          ctx.fillStyle = borderColor
+          ctx.fillRect(
+            margin - borderWidth,
+            margin - borderWidth,
+            quarterSize + borderWidth * 2,
+            quarterSize + borderWidth * 2,
+          )
+        }
         drawImageMaintainAspect(margin, margin, quarterSize, quarterSize)
 
-        ctx.fillStyle = borderColor
-        ctx.fillRect(
-          margin * 2 + quarterSize - borderWidth,
-          margin - borderWidth,
-          quarterSize + borderWidth * 2,
-          quarterSize + borderWidth * 2,
-        )
+        if (borderWidth > 0) {
+          ctx.fillStyle = borderColor
+          ctx.fillRect(
+            margin * 2 + quarterSize - borderWidth,
+            margin - borderWidth,
+            quarterSize + borderWidth * 2,
+            quarterSize + borderWidth * 2,
+          )
+        }
         drawImageMaintainAspect(margin * 2 + quarterSize, margin, quarterSize, quarterSize)
 
-        ctx.fillStyle = borderColor
-        ctx.fillRect(
-          margin - borderWidth,
-          margin * 2 + quarterSize - borderWidth,
-          quarterSize + borderWidth * 2,
-          quarterSize + borderWidth * 2,
-        )
+        if (borderWidth > 0) {
+          ctx.fillStyle = borderColor
+          ctx.fillRect(
+            margin - borderWidth,
+            margin * 2 + quarterSize - borderWidth,
+            quarterSize + borderWidth * 2,
+            quarterSize + borderWidth * 2,
+          )
+        }
         drawImageMaintainAspect(margin, margin * 2 + quarterSize, quarterSize, quarterSize)
 
-        ctx.fillStyle = borderColor
-        ctx.fillRect(
-          margin * 2 + quarterSize - borderWidth,
-          margin * 2 + quarterSize - borderWidth,
-          quarterSize + borderWidth * 2,
-          quarterSize + borderWidth * 2,
-        )
+        if (borderWidth > 0) {
+          ctx.fillStyle = borderColor
+          ctx.fillRect(
+            margin * 2 + quarterSize - borderWidth,
+            margin * 2 + quarterSize - borderWidth,
+            quarterSize + borderWidth * 2,
+            quarterSize + borderWidth * 2,
+          )
+        }
         drawImageMaintainAspect(margin * 2 + quarterSize, margin * 2 + quarterSize, quarterSize, quarterSize)
         break
 
@@ -854,25 +927,27 @@ const SimpleCollageMaker: React.FC<SimpleCollageMakerProps> = ({ open, onClose, 
         break
 
       case "frame":
-        const frameSize = Math.min(canvasWidth, canvasHeight) * 0.7
-        const frameX = (canvasWidth - frameSize) / 2
-        const frameY = (canvasHeight - frameSize) / 2
+        const frameSize = Math.min(canvasWidth, canvasHeight)
+        const frameX = 0
+        const frameY = 0
 
-        ctx.fillStyle = borderColor
-        ctx.fillRect(
-          frameX - borderWidth,
-          frameY - borderWidth,
-          frameSize + borderWidth * 2,
-          frameSize + borderWidth * 2,
-        )
+        if (borderWidth > 0) {
+          ctx.fillStyle = borderColor
+          ctx.fillRect(
+            frameX - borderWidth,
+            frameY - borderWidth,
+            frameSize + borderWidth * 2,
+            frameSize + borderWidth * 2,
+          )
+        }
 
         drawImageMaintainAspect(frameX, frameY, frameSize, frameSize)
         break
 
       case "heart":
-        const heartSize = Math.min(canvasWidth, canvasHeight) * 0.7
-        const heartX = (canvasWidth - heartSize) / 2
-        const heartY = (canvasHeight - heartSize) / 2
+        const heartSize = Math.min(canvasWidth, canvasHeight)
+        const heartX = 0
+        const heartY = 0
 
         if (borderWidth > 0) {
           ctx.fillStyle = borderColor
@@ -896,9 +971,9 @@ const SimpleCollageMaker: React.FC<SimpleCollageMakerProps> = ({ open, onClose, 
         break
 
       case "circle":
-        const circleSize = Math.min(canvasWidth, canvasHeight) * 0.7
-        const circleX = (canvasWidth - circleSize) / 2
-        const circleY = (canvasHeight - circleSize) / 2
+        const circleSize = Math.min(canvasWidth, canvasHeight)
+        const circleX = 0
+        const circleY = 0
         const radius = circleSize / 2
 
         if (borderWidth > 0) {
@@ -913,9 +988,9 @@ const SimpleCollageMaker: React.FC<SimpleCollageMakerProps> = ({ open, onClose, 
         break
 
       case "star":
-        const starSize = Math.min(canvasWidth, canvasHeight) * 0.7
-        const starX = (canvasWidth - starSize) / 2
-        const starY = (canvasHeight - starSize) / 2
+        const starSize = Math.min(canvasWidth, canvasHeight)
+        const starX = 0
+        const starY = 0
 
         if (borderWidth > 0) {
           ctx.fillStyle = borderColor
@@ -1019,9 +1094,8 @@ const SimpleCollageMaker: React.FC<SimpleCollageMakerProps> = ({ open, onClose, 
                 p: 2,
                 height: 400,
                 overflow: "hidden",
-                background: "rgba(255, 255, 255, 0.05)",
-                backdropFilter: "blur(20px)",
-                border: "1px solid rgba(255, 255, 255, 0.1)",
+                background: "transparent", // הסרת הרקע הלבן
+                border: "none", // הסרת המסגרת
               }}
             >
               <canvas
@@ -1031,7 +1105,7 @@ const SimpleCollageMaker: React.FC<SimpleCollageMakerProps> = ({ open, onClose, 
             </Box>
           </Grid>
 
-          <Grid  >
+          <Grid >
             <FormControl fullWidth sx={{ mb: 3, mt: 2 }}>
               <InputLabel
                 sx={{
@@ -1131,6 +1205,7 @@ const SimpleCollageMaker: React.FC<SimpleCollageMakerProps> = ({ open, onClose, 
             </Typography>
             <Box sx={{ display: "flex", gap: 1, mb: 3, flexWrap: "wrap" }}>
               {[
+                "transparent", // שקוף
                 "#ffffff", // לבן
                 "#f0f0f0", // אפור בהיר
                 "#e3f2fd", // כחול בהיר
@@ -1146,11 +1221,14 @@ const SimpleCollageMaker: React.FC<SimpleCollageMakerProps> = ({ open, onClose, 
                   sx={{
                     width: 30,
                     height: 30,
-                    backgroundColor: color,
+                    backgroundColor: color === "transparent" ? "transparent" : color,
                     border: backgroundColor === color ? "3px solid #00d4ff" : "1px solid rgba(255,255,255,0.3)",
                     borderRadius: "50%",
                     cursor: "pointer",
                     transition: "all 0.3s ease",
+                    backgroundImage: color === "transparent" ? "linear-gradient(45deg, #ccc 25%, transparent 25%), linear-gradient(-45deg, #ccc 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #ccc 75%), linear-gradient(-45deg, transparent 75%, #ccc 75%)" : "none",
+                    backgroundSize: color === "transparent" ? "8px 8px" : "auto",
+                    backgroundPosition: color === "transparent" ? "0 0, 0 4px, 4px -4px, -4px 0px" : "auto",
                     "&:hover": {
                       transform: "scale(1.1)",
                       boxShadow: "0 4px 15px rgba(0, 212, 255, 0.3)",
