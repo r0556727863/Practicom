@@ -54,7 +54,7 @@ const FolderImages: React.FC = () => {
 
       try {
         // Fetch album details
-        const albumResponse = await axios.get(`${process.env.REACT_APP_API_URL}/Album/${folderId}`,
+        const albumResponse = await axios.get(`${import.meta.env.VITE_API_URL}/Album/${folderId}`,
           {
           headers: { Authorization: `Bearer ${token}` },
         })
@@ -64,7 +64,7 @@ const FolderImages: React.FC = () => {
         }
 
         // Fetch images
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/Photo`, {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/Photo`, {
           headers: { Authorization: `Bearer ${token}` },
         })
 
@@ -108,7 +108,7 @@ const FolderImages: React.FC = () => {
       return
     }
     try {
-      await axios.delete(`${process.env.REACT_APP_API_URL}/Photo/${imageToDelete}`, {
+      await axios.delete(`${import.meta.env.VITE_API_URL}/Photo/${imageToDelete}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
 
@@ -131,7 +131,7 @@ const FolderImages: React.FC = () => {
     }
     try {
       await axios.put(
-        `${process.env.REACT_APP_API_URL}/Photo/${image.photoId}`,
+        `${import.meta.env.VITE_API_URL}/Photo/${image.photoId}`,
         {
           ...image,
           title: newTitle,

@@ -326,7 +326,7 @@ const AIAssistantButton: React.FC = () => {
 
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/AiDescription/chat`,
+        `${import.meta.env.VITE_API_URL}/AiDescription/chat`,
         {
           generatedText: input,
         },

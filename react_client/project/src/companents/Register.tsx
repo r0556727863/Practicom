@@ -58,7 +58,7 @@ export default function Register() {
 
   const registerUser = async (user: RegisterForm): Promise<User> => {
     try {
-      const response = await axios.post<{ userId: number }>(`${process.env.REACT_APP_API_URL}/User/register`,user, {
+      const response = await axios.post<{ userId: number }>(`${import.meta.env.VITE_API_URL}/User/register`,user, {
         headers: {
           "Content-Type": "application/json",
         },

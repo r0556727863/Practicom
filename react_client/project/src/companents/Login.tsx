@@ -40,9 +40,10 @@ export default function Login() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
+
   const loginUser = async (user: { Email: string; Password: string }): Promise<LoginResponse | null> => {
     try {
-      const response = await axios.post<LoginResponse>(`${process.env.REACT_APP_API_URL}/Auth/login`,user, {
+      const response = await axios.post<LoginResponse>(`${import.meta.env.VITE_API_URL}/Auth/login`,user, {
         headers: { "Content-Type": "application/json" },
       })
       return response.data
@@ -65,7 +66,7 @@ export default function Login() {
       const response = await loginUser(data)
       if (response?.token && response.user) {
         localStorage.setItem("token", response.token)
-        localStorage.setItem("user", JSON.stringify(response.user));
+        // localStorage.setItem("user", JSON.stringify(response.user));
 
         setMyUser({
           UserId: response.user.id,

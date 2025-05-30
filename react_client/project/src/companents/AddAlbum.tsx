@@ -38,21 +38,22 @@ const AlbumUploader: React.FC = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user")
+    // const storedUser = localStorage.getItem("user")
     const token = localStorage.getItem("token")
   
     // אם אין משתמש בזיכרון וגם אין משתמש בשמירה, או שאין טוקן
-    if ((!user && !storedUser) || !token) {
+    if (!userId  || !token) {
+      setMessage("יש להתחבר קודם.")
       navigate("/login")
     }
-  }, [user, navigate])
+  }, [token,userId, navigate])
   
 
   const submitAlbum = async () => {
     setLoading(true)
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/Album/album`,
+        `${import.meta.env.VITE_API_URL}/Album/album`,
         {
           title: albumTitle,
           description: albumDescription,

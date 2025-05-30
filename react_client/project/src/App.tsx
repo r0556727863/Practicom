@@ -109,22 +109,22 @@ const AppContent = () => {
   }
 
   // טעינת המשתמש מ־localStorage (חד פעמי)
-  useEffect(() => {
-    const token = localStorage.getItem("token")
-    const userJson = localStorage.getItem("user")
-console.log("Loading user from localStorage:", userJson);
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token")
+  //   const userJson = localStorage.getItem("user")
+  //   console.log("Loading user from localStorage:", userJson);
 
-    if (token && userJson && !user) {
-      const user = JSON.parse(userJson)
-      setMyUser({
-        UserId: user.id,
-        UserName: user.userName,
-        Email: user.email,
-        Phone: user.phone,
-        Password: "", // אין צורך לשמור סיסמה
-      })
-    }
-  }, [])
+  //   if (token && userJson && !user) {
+  //     const user = JSON.parse(userJson)
+  //     setMyUser({
+  //       UserId: user.id,
+  //       UserName: user.userName,
+  //       Email: user.email,
+  //       Phone: user.phone,
+  //       Password: "", // אין צורך לשמור סיסמה
+  //     })
+  //   }
+  // }, [])
 
   return (
     <AISuggestionsProvider currentPage={location.pathname.split("/")[1] || "HomePage"}>

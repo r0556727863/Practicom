@@ -405,7 +405,7 @@ const FolderList = () => {
       if (!token || !user?.UserId) return // עדיין לא מוכן – אל תעשה כלום
 
       try {
-        const response = await axios.get(  `${process.env.REACT_APP_API_URL}/album`, {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/album`, {
           headers: { Authorization: `Bearer ${token}` },
         })
 
@@ -445,7 +445,7 @@ const FolderList = () => {
     if (!token || !folderIdToDelete) return
 
     try {
-      await axios.delete(  `${process.env.REACT_APP_API_URL}/album/${folderIdToDelete}`,{
+      await axios.delete(  `${import.meta.env.VITE_API_URL}/album/${folderIdToDelete}`,{
         headers: { Authorization: `Bearer ${token}` },
       })
 
@@ -475,7 +475,7 @@ const FolderList = () => {
     setSaving(true)
     try {
       await axios.put(
-        `${process.env.REACT_APP_API_URL}/album/${editingFolder.albumId}`,
+        `${import.meta.env.VITE_API_URL}/album/${editingFolder.albumId}`,
         {
           albumId: editingFolder.albumId,
           title: newTitle,
