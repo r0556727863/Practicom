@@ -38,9 +38,8 @@ const AlbumUploader: React.FC = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    // const storedUser = localStorage.getItem("user")
     const token = localStorage.getItem("token")
-  
+
     // אם אין משתמש בזיכרון וגם אין משתמש בשמירה, או שאין טוקן
     if (!userId  || !token) {
       setMessage("יש להתחבר קודם.")

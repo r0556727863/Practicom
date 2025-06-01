@@ -402,8 +402,13 @@ const FolderList = () => {
 
   useEffect(() => {
     const fetchFolders = async () => {
-      if (!token || !user?.UserId) return // עדיין לא מוכן – אל תעשה כלום
-
+      // if (!token || !user?.UserId) return // עדיין לא מוכן – אל תעשה כלום
+      if (!token || !user?.UserId) {
+        setError("המשתמש אינו מחובר. אנא התחבר.")
+        setLoading(false)
+        navigate("/Login")
+        return
+      }
       try {
         const response = await axios.get(`${import.meta.env.VITE_API_URL}/album`, {
           headers: { Authorization: `Bearer ${token}` },
@@ -445,7 +450,7 @@ const FolderList = () => {
     if (!token || !folderIdToDelete) return
 
     try {
-      await axios.delete(  `${import.meta.env.VITE_API_URL}/album/${folderIdToDelete}`,{
+      await axios.delete(`${import.meta.env.VITE_API_URL}/album/${folderIdToDelete}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
 

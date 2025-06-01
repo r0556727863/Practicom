@@ -19,9 +19,9 @@ import {
   CardActions,
   Tooltip,
   Divider,
-  Paper,
   Snackbar,
   Alert,
+  Backdrop,
 } from "@mui/material"
 
 import CloseIcon from "@mui/icons-material/Close"
@@ -33,17 +33,17 @@ import CancelIcon from "@mui/icons-material/Cancel"
 import ZoomInIcon from "@mui/icons-material/ZoomIn"
 import ZoomOutIcon from "@mui/icons-material/ZoomOut"
 import RestartAltIcon from "@mui/icons-material/RestartAlt"
-import ArrowBackIcon from "@mui/icons-material/ArrowBack"
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward"
+import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore"
+import NavigateNextIcon from "@mui/icons-material/NavigateNext"
 import SlideshowIcon from "@mui/icons-material/Slideshow"
 import DownloadIcon from "@mui/icons-material/Download"
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome"
 import FileUploader from "./FileUploader"
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch"
-import styles from "../styles/imageDialog.styles"
 import SimpleSlideshowMaker from "./simple-slideshow-maker"
 import AIImageButton from "./ai-image-description/ai-image-button"
 import AIImageAnalyzer from "./ai-image-description/ai-image-analyzer"
+import styles from "../styles/imageDialog.styles"
 
 interface Image {
   photoId: number
@@ -58,7 +58,7 @@ interface ImageDialogProps {
   onClose: () => void
   images: Image[]
   albumId?: number
-  albumTitle?: string // הוספת פרופס לאלבום
+  albumTitle?: string
   onDeleteImage: (photoId: number) => void
   onUpdateImage: (image: Image, newTitle: string) => Promise<boolean>
   onUploadImage: () => void
@@ -104,30 +104,31 @@ const ImageDialog: React.FC<ImageDialogProps> = ({
   const [tabValue, setTabValue] = useState(0)
   const [slideshowOpen, setSlideshowOpen] = useState(false)
   const [aiAnalyzerOpen, setAiAnalyzerOpen] = useState(false)
+  const [lightboxOpen, setLightboxOpen] = useState(false)
 
-  // מצבים להודעות
   const [snackbarOpen, setSnackbarOpen] = useState(false)
   const [snackbarMessage, setSnackbarMessage] = useState("")
   const [snackbarSeverity, setSnackbarSeverity] = useState<"success" | "error" | "info" | "warning">("success")
-  // הוספת מאזין לאירועים של מקלדת
+
   React.useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (selectedImage) {
+      if (lightboxOpen) {
         if (event.key === "ArrowRight") {
-          handleNextImage();
+          handleNextImage()
         } else if (event.key === "ArrowLeft") {
-          handlePrevImage();
+          handlePrevImage()
+        } else if (event.key === "Escape") {
+          closeLightbox()
         }
       }
-    };
+    }
 
-    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown)
 
-    // ניקוי המאזין כאשר הרכיב מתפרק
     return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [selectedImage, selectedImageIndex]); // הוסף את selectedImage ו-selectedImageIndex כתלות
+      window.removeEventListener("keydown", handleKeyDown)
+    }
+  }, [lightboxOpen, selectedImageIndex])
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue)
@@ -146,11 +147,17 @@ const ImageDialog: React.FC<ImageDialogProps> = ({
   const handleClose = () => {
     onClose()
     setUploadOpen(false)
-    setSelectedImage(null)
-    setSelectedImageIndex(-1)
+    closeLightbox()
   }
 
-  const handleCloseFullImage = () => {
+  const openLightbox = (index: number) => {
+    setSelectedImageIndex(index)
+    setSelectedImage(images[index])
+    setLightboxOpen(true)
+  }
+
+  const closeLightbox = () => {
+    setLightboxOpen(false)
     setSelectedImage(null)
     setSelectedImageIndex(-1)
   }
@@ -181,12 +188,6 @@ const ImageDialog: React.FC<ImageDialogProps> = ({
     return lastDot === -1 ? filename : filename.substring(0, lastDot)
   }
 
-  // פונקציות לניווט בין תמונות
-  const handleSelectImage = (image: Image, index: number) => {
-    setSelectedImage(image)
-    setSelectedImageIndex(index)
-  }
-
   const handleNextImage = () => {
     if (selectedImageIndex < images.length - 1) {
       const nextIndex = selectedImageIndex + 1
@@ -207,51 +208,40 @@ const ImageDialog: React.FC<ImageDialogProps> = ({
     setSlideshowOpen(true)
   }
 
-  // פתיחת מנתח התמונות AI
   const handleOpenAIAnalyzer = (image: Image) => {
     setSelectedImage(image)
     setAiAnalyzerOpen(true)
   }
 
-  // פונקציה להצגת הודעות
   const showSnackbar = (message: string, severity: "success" | "error" | "info" | "warning" = "success") => {
     setSnackbarMessage(message)
     setSnackbarSeverity(severity)
     setSnackbarOpen(true)
   }
 
-  // פונקציה להורדת תמונה - גרסה משופרת שנשארת באותו עמוד
   const handleDownloadImage = async (image: Image) => {
     try {
       showSnackbar("מכין את התמונה להורדה...", "info")
 
-      // יצירת URL להורדה דרך השרת
       const filename = image.title || `image_${image.photoId}.jpg`
       const downloadUrl = `${import.meta.env.VITE_API_URL}/Download/image?url=${encodeURIComponent(image.url)}&filename=${encodeURIComponent(filename)}`
 
-      // הורדת התמונה באמצעות fetch
       const response = await fetch(downloadUrl)
 
       if (!response.ok) {
         throw new Error(`שגיאת שרת: ${response.status}`)
       }
 
-      // קבלת ה-blob מהתגובה
       const blob = await response.blob()
-
-      // יצירת URL לבלוב
       const url = URL.createObjectURL(blob)
 
-      // יצירת אלמנט קישור להורדה
       const link = document.createElement("a")
       link.href = url
       link.download = filename
       document.body.appendChild(link)
 
-      // לחיצה על הקישור להורדה
       link.click()
 
-      // ניקוי
       document.body.removeChild(link)
       URL.revokeObjectURL(url)
 
@@ -262,11 +252,8 @@ const ImageDialog: React.FC<ImageDialogProps> = ({
     }
   }
 
-  // עדכון תיאור התמונה מה-AI
   const handleUpdateAIDescription = async (description: string) => {
     if (selectedImage) {
-      // כאן אפשר להוסיף לוגיקה לשמירת התיאור במסד הנתונים
-      // לדוגמה, אפשר להשתמש ב-onUpdateImage כדי לעדכן את כותרת התמונה
       const newImageTitle =
         getFileNameWithoutExtension(selectedImage.title) + " - " + description.substring(0, 30) + "..."
       const success = await onUpdateImage(selectedImage, newImageTitle)
@@ -295,7 +282,7 @@ const ImageDialog: React.FC<ImageDialogProps> = ({
             <CloseIcon />
           </IconButton>
           <Typography variant="h6" component="div" fontWeight="bold" sx={styles.title}>
-            {`תמונות באלבום ${albumTitle}`} {/* כאן משתמשים בשם האלבום */}
+            {`תמונות באלבום ${albumTitle}`}
           </Typography>
         </DialogTitle>
 
@@ -342,7 +329,7 @@ const ImageDialog: React.FC<ImageDialogProps> = ({
                             height="200"
                             image={image.url}
                             alt={image.title}
-                            onClick={() => handleSelectImage(image, index)}
+                            onClick={() => openLightbox(index)}
                             sx={{
                               ...styles.cardMedia,
                               objectFit: "cover",
@@ -404,22 +391,20 @@ const ImageDialog: React.FC<ImageDialogProps> = ({
                               <DeleteIcon fontSize="small" />
                             </IconButton>
                           </Tooltip>
-                          {/* כפתור הורדה */}
                           <Tooltip title="הורד תמונה">
                             <IconButton
-                              size="medium" // או תוכל לשים כאן "small" אם זה מה שצריך
+                              size="medium"
                               sx={{
-                                color: "#388E3C", // או "#4CAF50" לצבע חזק יותר
+                                color: "#388E3C",
                                 "&:hover": { color: "#2e7d32" },
                                 width: 50,
                                 height: 50,
                               }}
                               onClick={() => handleDownloadImage(image)}
                             >
-                              <DownloadIcon fontSize="inherit" /> {/* השתמש ב-inherit כדי להתאים את גודל האייקון לגודל הכפתור */}
+                              <DownloadIcon fontSize="inherit" />
                             </IconButton>
                           </Tooltip>
-                          {/* כפתור AI */}
                           <AIImageButton onClick={() => handleOpenAIAnalyzer(image)} />
                         </CardActions>
                       </Card>
@@ -460,123 +445,171 @@ const ImageDialog: React.FC<ImageDialogProps> = ({
         </DialogContent>
       </Dialog>
 
-      {/* דיאלוג הצגת תמונה בגודל מלא - עם חצי ניווט */}
-      {selectedImage && (
-        <Dialog
-          open={true}
-          onClose={handleCloseFullImage}
-          maxWidth="lg"
-          PaperProps={{
-            sx: {
-              ...styles.fullImageDialog,
-              borderRadius: "10px", // פחות אליפסה, יותר קרוב למלבן
-              border: "5px solid rgba(0, 212, 255, 0.7)", // מסגרת צבעונית
-              overflow: "visible", // שנה ל-visible כדי לא לאפשר חיתוך
-            },
-          }}
-        >
-
-          <IconButton aria-label="close" onClick={handleCloseFullImage} sx={styles.fullImageCloseButton}>
-            <CloseIcon />
-          </IconButton>
-
-          {/* חץ קודם */}
-          {selectedImageIndex > 0 && (
+      {/* Lightbox - בדיוק כמו הקוד שהבאת */}
+      <Dialog
+        open={lightboxOpen}
+        onClose={closeLightbox}
+        maxWidth={false}
+        fullWidth
+        PaperProps={{
+          sx: {
+            background: "transparent",
+            boxShadow: "none",
+            maxWidth: "90vw",
+            maxHeight: "90vh",
+          },
+        }}
+      >
+        <Backdrop open={lightboxOpen} sx={{ backgroundColor: "rgba(0, 0, 0, 0.9)" }}>
+          <Box
+            sx={{
+              position: "relative",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "60%",
+              height: "90%",
+              p: 4,
+            }}
+          >
             <IconButton
-              onClick={handlePrevImage}
               sx={{
                 position: "absolute",
-                left: 16,
-                top: "50%",
-                transform: "translateY(-50%)",
+                top: 20,
+                right: -200,
                 color: "white",
-                backgroundColor: "rgba(0,0,0,0.3)",
-                "&:hover": { backgroundColor: "rgba(0,0,0,0.5)" },
-                zIndex: 10,
+                background: "rgba(0, 0, 0, 0.5)",
+                "&:hover": { background: "rgba(0, 0, 0, 0.7)" },
+                zIndex: 3,
               }}
+              onClick={closeLightbox}
             >
-              <ArrowBackIcon />
+              <CloseIcon />
             </IconButton>
-          )}
 
-          {/* חץ הבא */}
-          {selectedImageIndex < images.length - 1 && (
-            <IconButton
-              onClick={handleNextImage}
-              sx={{
-                position: "absolute",
-                right: 16,
-                top: "50%",
-                transform: "translateY(-50%)",
-                color: "white",
-                backgroundColor: "rgba(0,0,0,0.3)",
-                "&:hover": { backgroundColor: "rgba(0,0,0,0.5)" },
-                zIndex: 10,
-              }}
+            {images.length > 1 && (
+              <>
+                <IconButton
+                  sx={{
+                    position: "absolute",
+                    left: -250,
+                    color: "white",
+                    background: "rgba(0, 0, 0, 0.5)",
+                    "&:hover": { background: "rgba(0, 0, 0, 0.7)" },
+                    zIndex: 3,
+                  }}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    handlePrevImage()
+                  }}
+                >
+                  <NavigateBeforeIcon />
+                </IconButton>
+
+                <IconButton
+                  sx={{
+                    position: "absolute",
+                    right: -250,
+                    color: "white",
+                    background: "rgba(0, 0, 0, 0.5)",
+                    "&:hover": { background: "rgba(0, 0, 0, 0.7)" },
+                    zIndex: 3,
+                  }}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    handleNextImage()
+                  }}
+                >
+                  <NavigateNextIcon />
+                </IconButton>
+              </>
+            )}
+
+            <TransformWrapper
+              initialScale={1}
+              initialPositionX={0}
+              initialPositionY={0}
+              wheel={{ step: 0.1 }}
+              doubleClick={{ disabled: false }}
             >
-              <ArrowForwardIcon />
-            </IconButton>
-          )}
-
-          <Box sx={styles.fullImageContainer}>
-            <TransformWrapper initialScale={1} initialPositionX={0} initialPositionY={0}>
               {({ zoomIn, zoomOut, resetTransform }) => (
                 <>
-                 <TransformComponent
-  wrapperStyle={{
-    width: "100%",
-    height: "80vh", // אפשר לשנות את הגובה בהתאם לצורך
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  }}
->
-  <img
-    src={selectedImage.url || "/placeholder.svg"}
-    alt={selectedImage.title}
-    style={styles.fullImage}
-  />
-</TransformComponent>
+                  <TransformComponent>
+                    <Box
+                      component="img"
+                      src={selectedImage?.url}
+                      alt={selectedImage?.title}
+                      sx={{
+                        maxWidth: "90%",
+                        maxHeight: "90%",
+                        objectFit: "contain",
+                        borderRadius: "8px",
+                      }}
+                      onClick={(e) => e.stopPropagation()}
+                    />
+                  </TransformComponent>
 
-                  {/* כפתורי זום בתחתית התמונה */}
-                  <Paper elevation={3} sx={styles.zoomControls}>
-                    <IconButton onClick={() => zoomIn()} size="small" sx={{ ...styles.zoomButton, background: "rgba(0, 212, 255, 0.8)" }}>
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      bottom: 3,
+                      left: "50%",
+                      transform: "translateX(-50%)",
+                      display: "flex",
+                      gap: 1,
+                      background: "rgba(0, 0, 0, 0.7)",
+                      borderRadius: "20px",
+                      padding: "8px 12px",
+                      zIndex: 3,
+                    }}
+                  >
+                    <IconButton
+                      onClick={() => zoomIn()}
+                      size="small"
+                      sx={{ color: "white", "&:hover": { background: "rgba(255, 255, 255, 0.1)" } }}
+                      title="הגדל"
+                    >
                       <ZoomInIcon fontSize="small" />
                     </IconButton>
-                    <IconButton onClick={() => zoomOut()} size="small" sx={{ ...styles.zoomButton, background: "rgba(0, 212, 255, 0.8)" }}>
+                    <IconButton
+                      onClick={() => zoomOut()}
+                      size="small"
+                      sx={{ color: "white", "&:hover": { background: "rgba(255, 255, 255, 0.1)" } }}
+                      title="הקטן"
+                    >
                       <ZoomOutIcon fontSize="small" />
                     </IconButton>
-                    <IconButton onClick={() => resetTransform()} size="small" sx={{ ...styles.zoomButton, background: "rgba(0, 212, 255, 0.8)" }}>
+                    <IconButton
+                      onClick={() => resetTransform()}
+                      size="small"
+                      sx={{ color: "white", "&:hover": { background: "rgba(255, 255, 255, 0.1)" } }}
+                      title="איפוס זום"
+                    >
                       <RestartAltIcon fontSize="small" />
                     </IconButton>
                     <IconButton
-                      onClick={() => handleDownloadImage(selectedImage)}
+                      onClick={() => selectedImage && handleDownloadImage(selectedImage)}
                       size="small"
-                      sx={{
-                        ...styles.zoomButton,
-                        background: "rgba(0, 212, 255, 0.8)", // צבע רקע שונה
-                      }}
+                      sx={{ color: "white", "&:hover": { background: "rgba(255, 255, 255, 0.1)" } }}
+                      title="הורד תמונה"
                     >
                       <DownloadIcon fontSize="small" />
                     </IconButton>
-                    {/* כפתור AI בתצוגה מלאה */}
                     <IconButton
-                      onClick={() => handleOpenAIAnalyzer(selectedImage)}
+                      onClick={() => selectedImage && handleOpenAIAnalyzer(selectedImage)}
                       size="small"
-                      sx={{
-                        ...styles.zoomButton,
-                        background: "rgba(0, 212, 255, 0.8)", // צבע רקע שונה
-                      }}
+                      sx={{ color: "white", "&:hover": { background: "rgba(255, 255, 255, 0.1)" } }}
+                      title="ניתוח AI"
                     >
                       <AutoAwesomeIcon fontSize="small" />
                     </IconButton>
-                  </Paper>
+                  </Box>
                 </>
               )}
             </TransformWrapper>
           </Box>
-        </Dialog>
-      )}
+        </Backdrop>
+      </Dialog>
 
       {/* דיאלוג יצירת מצגת */}
       {slideshowOpen && albumId && (
