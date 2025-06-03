@@ -460,7 +460,7 @@ const ImageDialog: React.FC<ImageDialogProps> = ({
           },
         }}
       >
-        <Backdrop open={lightboxOpen} sx={{ backgroundColor: "rgba(0, 0, 0, 0.9)" }}>
+        <Backdrop open={lightboxOpen} sx={{ backgroundColor: "rgba(24, 24, 24, 0.9)" }}>
           <Box
             sx={{
               position: "relative",
@@ -470,60 +470,64 @@ const ImageDialog: React.FC<ImageDialogProps> = ({
               width: "60%",
               height: "90%",
               p: 4,
+              paddingLeft:13,
             }}
           >
-            <IconButton
-              sx={{
-                position: "absolute",
-                top: 20,
-                right: -200,
-                color: "white",
-                background: "rgba(0, 0, 0, 0.5)",
-                "&:hover": { background: "rgba(0, 0, 0, 0.7)" },
-                zIndex: 3,
-              }}
-              onClick={closeLightbox}
-            >
-              <CloseIcon />
-            </IconButton>
+            
+      {/* איקס - סגירה */}
+      <IconButton
+  sx={{
+    position: "absolute",
+    top: 16,
+    right: 1, // או אפילו 8 אם את רוצה יותר צמוד
+    color: "white",
+    background: "rgba(0,0,0,0.5)",
+    "&:hover": { background: "rgba(0,0,0,0.7)" },
+    zIndex: 3,
+  }}
+  onClick={closeLightbox}
+>
+  <CloseIcon sx={{ fontSize: 28 }} />
+</IconButton>
+<IconButton
+  sx={{
+    position: "absolute",
+    top: "50%",
+    transform: "translateY(-50%)",
+    left: 1, // במקום -250 או דברים כאלה
+    color: "white",
+    background: "rgba(0,0,0,0.5)",
+    "&:hover": { background: "rgba(0,0,0,0.7)" },
+    zIndex: 3,
+  }}
+  onClick={(e) => {
+    e.stopPropagation();
+    handlePrevImage();
+  }}
+>
+  <NavigateBeforeIcon sx={{ fontSize: 28 }}/>
+</IconButton>
 
-            {images.length > 1 && (
-              <>
-                <IconButton
-                  sx={{
-                    position: "absolute",
-                    left: -250,
-                    color: "white",
-                    background: "rgba(0, 0, 0, 0.5)",
-                    "&:hover": { background: "rgba(0, 0, 0, 0.7)" },
-                    zIndex: 3,
-                  }}
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    handlePrevImage()
-                  }}
-                >
-                  <NavigateBeforeIcon />
-                </IconButton>
+<IconButton
+  sx={{
+    position: "absolute",
+    top: "50%",
+    transform: "translateY(-50%)",
+    right: 1,
+    color: "white",
+    background: "rgba(0,0,0,0.5)",
+    "&:hover": { background: "rgba(0,0,0,0.7)" },
+    zIndex: 3,
+  }}
+  onClick={(e) => {
+    e.stopPropagation();
+    handleNextImage();
+  }}
+>
+  <NavigateNextIcon sx={{ fontSize: 28 }}/>
+</IconButton>
 
-                <IconButton
-                  sx={{
-                    position: "absolute",
-                    right: -250,
-                    color: "white",
-                    background: "rgba(0, 0, 0, 0.5)",
-                    "&:hover": { background: "rgba(0, 0, 0, 0.7)" },
-                    zIndex: 3,
-                  }}
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    handleNextImage()
-                  }}
-                >
-                  <NavigateNextIcon />
-                </IconButton>
-              </>
-            )}
+
 
             <TransformWrapper
               initialScale={1}
