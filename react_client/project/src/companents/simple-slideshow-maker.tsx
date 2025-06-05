@@ -232,7 +232,7 @@ const SimpleSlideshowMaker: React.FC<SimpleSlideshowMakerProps> = ({ open, onClo
             onClick={onClose}
             sx={{
               position: "absolute",
-              right: 16,
+              right: 37,
               top: "50%",
               transform: "translateY(-50%)",
               color: "white",

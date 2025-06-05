@@ -58,18 +58,6 @@ namespace Pictures.Api.Controllers
             return CreatedAtAction(nameof(Get), new { id = userToAdd.UserId }, newUserDto);
         }
 
-        //[HttpPost("login")]
-        //public async Task<ActionResult> Login([FromBody] Login login)
-        //{
-        //    var newUser =await _userService.LoginAsync(login);
-        //    if (login == null)
-        //    {
-        //        return Unauthorized(); // מחזיר שגיאה אם המשתמש לא נמצא
-        //    }
-        //    return Ok(login);
-        //}
-
-        // PUT api/<UserController>/5
         [HttpPut("{id}")]
         public async Task<ActionResult<UserDto>> Put(int id, [FromBody] UserPostModel user)
         {

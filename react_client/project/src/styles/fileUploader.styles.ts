@@ -133,7 +133,7 @@ export const fileUploaderStyles = {
   },
   closeButton: {
     position: "absolute",
-    top: 12,
+    top: 17,
     right: 22, // הזזה יותר שמאלה מ-12 ל-22
     background: "rgba(255, 255, 255, 0.1)",
     backdropFilter: "blur(20px)",

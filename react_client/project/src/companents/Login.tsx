@@ -116,10 +116,10 @@ export default function Login() {
               label="דואר אלקטרוני"
               {...register("Email", {
                 required: "דואר אלקטרוני הוא שדה חובה",
-                pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: "כתובת דואר אלקטרוני לא תקינה",
-                },
+                // pattern: {
+                //   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                //   message: "כתובת דואר אלקטרוני לא תקינה",
+                // },
               })}
               error={!!errors.Email}
               helperText={errors.Email?.message}
@@ -132,10 +132,10 @@ export default function Login() {
     label="סיסמה"
     {...register("Password", {
       required: "סיסמה היא שדה חובה",
-      minLength: {
-        value: 2,
-        message: "הסיסמה חייבת להכיל לפחות 2 תווים",
-      },
+      // minLength: {
+      //   value: 2,
+      //   message: "הסיסמה חייבת להכיל לפחות 2 תווים",
+      // },
     })}
     error={!!errors.Password}
     helperText={errors.Password?.message}

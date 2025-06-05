@@ -40,14 +40,14 @@ export const albumUploaderStyles = {
   },
   backButton: {
     position: "absolute",
-    top: 16,
-    right: 16,
+    top: 1,
+    right: 1,
     background: "rgba(255, 255, 255, 0.1)",
     backdropFilter: "blur(20px)",
     border: "1px solid rgba(255, 255, 255, 0.2)",
     color: "white",
-    width: 48,
-    height: 48,
+    width: 35,
+    height: 35,
     borderRadius: 12,
     "&:hover": {
       background: "rgba(0, 212, 255, 0.2)",
