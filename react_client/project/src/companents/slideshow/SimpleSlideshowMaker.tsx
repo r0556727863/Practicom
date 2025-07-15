@@ -1,5 +1,3 @@
-"use client"
-
 import type React from "react"
 import { useState, useEffect, useRef } from "react"
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Box, Typography, IconButton } from "@mui/material"
@@ -184,7 +182,6 @@ const SimpleSlideshowMaker: React.FC<SimpleSlideshowMakerProps> = ({ open, onClo
             <CloseIcon />
           </IconButton>
         </DialogTitle>
-
         <DialogContent sx={{ ...slideshowStyles.dialogContent, overflow: slideshowReady ? "hidden" : "auto" }}>
           {!slideshowReady ? (
             <>
@@ -235,7 +232,6 @@ const SimpleSlideshowMaker: React.FC<SimpleSlideshowMakerProps> = ({ open, onClo
             />
           )}
         </DialogContent>
-
         <DialogActions sx={slideshowStyles.dialogActions}>
           <Button onClick={onClose} sx={slideshowStyles.closeButtonAction}>
             סגור
@@ -253,9 +249,7 @@ const SimpleSlideshowMaker: React.FC<SimpleSlideshowMakerProps> = ({ open, onClo
           )}
         </DialogActions>
       </Dialog>
-
       <audio ref={audioRef} src={MUSIC_OPTIONS.find((option) => option.id === selectedMusic)?.url} loop />
-
       {/* השתמשתי בקומפוננטות העזר שלך */}
       <SuccessSnackbar
         open={notification.open && notification.severity === "success"}

@@ -1,4 +1,3 @@
-"use client"
 
 import type React from "react"
 import { Box, Typography, Button } from "@mui/material"
@@ -41,7 +40,6 @@ const SlideshowImageSelector: React.FC<SlideshowImageSelectorProps> = ({
           נבחרו {selectedImages.length} מתוך {images.length} תמונות
         </Typography>
       </Box>
-
       <Box sx={slideshowStyles.imageGrid}>
         {images.length === 0 ? (
           <Typography sx={{ color: "white" }}>אין תמונות</Typography>

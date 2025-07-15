@@ -1,5 +1,3 @@
-"use client"
-
 import type React from "react"
 import { Box, Typography, CircularProgress, IconButton } from "@mui/material"
 import PlayArrowIcon from "@mui/icons-material/PlayArrow"

@@ -1,5 +1,3 @@
-"use client"
-
 import type React from "react"
 import { Box, Typography, Slider, FormControl, InputLabel, Select, MenuItem, IconButton } from "@mui/material"
 import SpeedIcon from "@mui/icons-material/Speed"
@@ -56,7 +54,6 @@ const SlideshowControls: React.FC<SlideshowControlsProps> = ({
           sx={slideshowStyles.sliderContainer}
         />
       </Box>
-
       <Box sx={slideshowStyles.controlSection}>
         <Typography gutterBottom display="flex" alignItems="center" sx={{ color: "white" }}>
           <MusicNoteIcon sx={{ mr: 1, color: "#00d4ff" }} />

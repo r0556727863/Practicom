@@ -1,5 +1,3 @@
-"use client"
-
 import type React from "react"
 import { useState } from "react"
 import { Dialog, DialogTitle, DialogContent, IconButton, Typography, Tabs, Tab, Box } from "@mui/material"
@@ -53,7 +51,6 @@ function TabPanel(props: TabPanelProps) {
   )
 }
 
-// הקומפוננטה הראשית - רק state management ולוגיקה
 const ImageDialog: React.FC<ImageDialogProps> = ({
   open,
   onClose,
@@ -63,7 +60,7 @@ const ImageDialog: React.FC<ImageDialogProps> = ({
   onDeleteImage,
   onUpdateImage,
 }) => {
-  // כל ה-state בדיוק כמו שהיה
+
   const [editingPhotoId, setEditingPhotoId] = useState<number | null>(null)
   const [newTitle, setNewTitle] = useState<string>("")
   const [saving, setSaving] = useState(false)
@@ -79,7 +76,6 @@ const ImageDialog: React.FC<ImageDialogProps> = ({
   const [snackbarSeverity, setSnackbarSeverity] = useState<"success" | "error" | "info" | "warning">("success")
   const [error, setError] = useState<string | null>(null)
 
-  // כל הפונקציות בדיוק כמו שהיו
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue)
   }
