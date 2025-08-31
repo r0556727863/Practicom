@@ -1,0 +1,39 @@
+<div class="buttons">
+    <button (click)="loadUsers()">רענן רשימת משתמשים</button>
+    <button (click)="toggleAdd()">{{ showAdd ? 'בטל הוספה' : 'הוסף משתמש' }}</button>
+  </div>
+  
+  <div *ngIf="showAdd || showEdit" class="form-container">
+    <form [formGroup]="userForm" (ngSubmit)="submit()">
+      <input formControlName="userName" placeholder="שם משתמש" />
+      <input formControlName="email" placeholder="אימייל" />
+      <input formControlName="phone" placeholder="טלפון" />
+      <input formControlName="passWord" placeholder="סיסמה" type="passWord" />
+      <button type="submit">{{ showAdd ? 'הוסף' : 'עדכן' }}</button>
+      <button type="button" (click)="showAdd=false; showEdit=false">בטל</button>
+    </form>
+  </div>
+  
+  <h3>רשימת משתמשים</h3>
+  <table class="users-table">
+    <thead>
+      <tr>
+        <th>שם משתמש</th>
+        <th>אימייל</th>
+        <th>טלפון</th>
+        <th>פעולות</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{ user.userName || 'לא קיים' }}</td>
+        <td>{{ user.email || 'לא קיים' }}</td>
+        <td>{{ user.phone || 'לא קיים' }}</td>
+        <td>
+          <button (click)="toggleEdit(user)">עריכה</button>
+          <button (click)="deleteUser(user)">מחיקה</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  

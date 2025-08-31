@@ -30,6 +30,9 @@ namespace Pictures.Data.Repositories
 
         public async Task<Album> AddAlbumAsync(Album album)
         {
+            album.Created_at = DateTime.UtcNow;
+            album.Updated_at = DateTime.UtcNow;
+
             await _context.Albums.AddAsync(album);
             return album;
         }
@@ -44,7 +47,7 @@ namespace Pictures.Data.Repositories
             }
             existingAlbum.Title = album.Title;
             existingAlbum.Description = album.Description;
-            existingAlbum.Updated_at = album.Updated_at;
+            existingAlbum.Updated_at = DateTime.UtcNow;
             existingAlbum.Created_at = album.Created_at;
 
             return existingAlbum;

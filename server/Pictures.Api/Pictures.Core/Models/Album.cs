@@ -12,8 +12,8 @@ namespace Pictures.Core.Models
         public int UserId { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public DateTime Created_at { get; set; }=DateTime.Now;//תאריך יצירה
-        public DateTime Updated_at { get; set; }= DateTime.Now;//תאריך עדכון אחרון של האלבום
+        public DateTime Created_at { get; set; }
+        public DateTime Updated_at { get; set; }
         public List<Photo> Photos { get; set; }
 
 
