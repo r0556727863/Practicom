@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Pictures.Core.DTOs;
 using Pictures.Core.Models;
 using Pictures.Core.Repositories;
 using System;
@@ -62,6 +63,20 @@ namespace Pictures.Data.Repositories
                 _context.Albums.Remove(existingAlbum);
             }
         }
+
+        public async Task<List<AlbumsPerMonthDto>> GetAlbumsCountPerMonthAsync()
+        {
+            return await _context.Albums
+                .GroupBy(a => new { a.Created_at.Year, a.Created_at.Month })
+                .Select(g => new AlbumsPerMonthDto
+                {
+                    Year = g.Key.Year,
+                    Month = g.Key.Month,
+                    AlbumCount = g.Count()
+                })
+                .ToListAsync();
+        }
+
 
     }
 }

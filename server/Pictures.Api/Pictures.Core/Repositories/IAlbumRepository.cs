@@ -1,4 +1,5 @@
-﻿using Pictures.Core.Models;
+﻿using Pictures.Core.DTOs;
+using Pictures.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,7 @@ namespace Pictures.Core.Repositories
         Task<Album> AddAlbumAsync(Album album);
         Task<Album> PutAlbumAsync(int id, Album album);
         Task DeleteAlbumAsync(int id);
+        Task<List<AlbumsPerMonthDto>> GetAlbumsCountPerMonthAsync();
+
     }
 }

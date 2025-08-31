@@ -294,5 +294,13 @@ namespace Pictures.Api.Controllers
                 return StatusCode(500, $"שגיאת שרת: {ex.Message}");
             }
         }
+
+        [HttpGet("albums-per-month")]
+        public async Task<IActionResult> GetAlbumsPerMonth()
+        {
+            var result = await _albumService.GetAlbumsPerMonthAsync();
+            return Ok(result);
+        }
+
     }
 }

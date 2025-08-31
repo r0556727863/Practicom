@@ -1,4 +1,5 @@
-﻿using Pictures.Core.Models;
+﻿using Pictures.Core.DTOs;
+using Pictures.Core.Models;
 using Pictures.Core.Repositories;
 using Pictures.Core.Services;
 using System;
@@ -47,5 +48,11 @@ namespace Pictures.Service
             await _albumRepository.Albums.DeleteAlbumAsync(id);
             await _albumRepository.SaveAsync();
         }
+
+        public async Task<List<AlbumsPerMonthDto>> GetAlbumsPerMonthAsync()
+        {
+            return await _albumRepository.Albums.GetAlbumsCountPerMonthAsync();
+        }
+
     }
 }
